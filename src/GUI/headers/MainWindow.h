@@ -1,6 +1,7 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include "..\headers\treeEditor.h"
 #include <QMainWindow>
 #include <QPushButton>
 #include <QTreeWidgetItem>
@@ -18,7 +19,6 @@ class MainWindow : public QMainWindow
 
 public:
     MainWindow(QWidget *parent = nullptr);
-    void makeRow(QTreeWidgetItem *parent);
     ~MainWindow();
 
 private slots:
@@ -26,5 +26,6 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
+    TreeEditor *treeEditor;
 };
 #endif // MAINWINDOW_H
