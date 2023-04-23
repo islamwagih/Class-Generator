@@ -1,0 +1,6 @@
+ClassGenerator.pro.*
+.vscode/
+.idea/
+*.autosave
+*.exe
+build-ClassGenerator-*
