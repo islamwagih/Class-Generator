@@ -7,13 +7,12 @@
 class IntermediateFormatHandler
 {
 public:
-    IntermediateFormatHandler(QTreeWidget *tree, QString filePath);
-    void saveFile();
-    void loadFile(); 
+    IntermediateFormatHandler(QTreeWidget *tree);
+    void saveFile(QString filePath);
+    void loadFile(QString filePath);
     ~IntermediateFormatHandler();
 
 private:
     QTreeWidget *tree;
-    QString filePath;
 };
 #endif // INTERMEDIATEFORMATHANDLER_H
