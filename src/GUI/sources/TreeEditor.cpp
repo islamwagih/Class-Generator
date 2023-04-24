@@ -4,6 +4,8 @@
 #include <QHBoxLayout>
 #include <QHeaderView>
 
+TreeEditor *TreeEditor::instance = nullptr;
+
 TreeEditor::TreeEditor(QTreeWidget *tree) : tree(tree)
 {
     // make all headers in the treewidget stretch to fill the available space and make them resizable by the user
@@ -15,6 +17,20 @@ TreeEditor::TreeEditor(QTreeWidget *tree) : tree(tree)
     tree->header()->setSectionResizeMode(tree->columnCount() - 1, QHeaderView::Stretch);
     // center the text in the header
     tree->header()->setDefaultAlignment(Qt::AlignCenter);
+}
+
+void TreeEditor::init(QTreeWidget *tree)
+{
+    instance = new TreeEditor(tree);
+}
+
+TreeEditor *TreeEditor::getInstance()
+{
+    if (instance == nullptr)
+    {
+        throw std::runtime_error("TreeEditor instance not initialized");
+    }
+    return instance;
 }
 
 void TreeEditor::onComboboxChanged(QTreeWidgetItem *item)
@@ -64,7 +80,7 @@ void TreeEditor::onComboboxChanged(QTreeWidgetItem *item)
     }
 };
 
-void TreeEditor::makeRow(QTreeWidgetItem *parent)
+QTreeWidgetItem *TreeEditor::makeRow(QTreeWidgetItem *parent)
 {
     QTreeWidgetItem *item = new QTreeWidgetItem(parent);
     // insert a row into the tree
@@ -83,11 +99,38 @@ void TreeEditor::makeRow(QTreeWidgetItem *parent)
     layout->addWidget(new QLineEdit(this->tree));
     this->tree->setItemWidget(item, 2, widget);
     this->tree->expandItem(item);
+    return item;
+}
+
+QTreeWidgetItem *TreeEditor::makeRow(QTreeWidgetItem *parent, QString name, QString type, QPair<QString, QString> constraints)
+{
+    auto item = this->makeRow(parent);
+    static_cast<QLineEdit *>(this->tree->itemWidget(item, 0))->setText(name);
+    static_cast<QComboBox *>(this->tree->itemWidget(item, 1))->setCurrentText(type);
+    if (type == QString("int") || type == QString("float"))
+    {
+        static_cast<QLineEdit *>(static_cast<QHBoxLayout *>(this->tree->itemWidget(item, 2)->layout())->itemAt(0)->widget())->setText(constraints.first);
+        static_cast<QLineEdit *>(static_cast<QHBoxLayout *>(this->tree->itemWidget(item, 2)->layout())->itemAt(1)->widget())->setText(constraints.second);
+    }
+    else if (type == QString("string"))
+    {
+        static_cast<QLineEdit *>(static_cast<QHBoxLayout *>(this->tree->itemWidget(item, 2)->layout())->itemAt(0)->widget())->setText(constraints.first);
+    }
+    else if (type == QString("nested"))
+    {
+        item->takeChildren();
+    }
+    return item;
 }
 
 void TreeEditor::removeRow(QTreeWidgetItem *item)
 {
     delete item;
+}
+
+void TreeEditor::reset()
+{
+    this->tree->clear();
 }
 
 TreeEditor::~TreeEditor() {}

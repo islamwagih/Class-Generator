@@ -5,11 +5,20 @@
 
 class TreeEditor
 {
-public:
+private:
+    TreeEditor(const TreeEditor &) = delete;
+    TreeEditor &operator=(const TreeEditor &) = delete;
     TreeEditor(QTreeWidget *tree);
-    void makeRow(QTreeWidgetItem *parent);
+    static TreeEditor *instance;
+
+public:
+    QTreeWidgetItem *makeRow(QTreeWidgetItem *parent);
+    QTreeWidgetItem *makeRow(QTreeWidgetItem *parent, QString name, QString type, QPair<QString, QString> constraints);
     void removeRow(QTreeWidgetItem *item);
     void onComboboxChanged(QTreeWidgetItem *item);
+    static TreeEditor *getInstance();
+    static void init(QTreeWidget *tree);
+    void reset();
     ~TreeEditor();
 
 private:

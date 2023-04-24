@@ -1,4 +1,4 @@
-#include "..\headers\mainwindow.h"
+#include "..\headers\MainWindow.h"
 #include "ui_mainwindow.h"
 #include <QComboBox>
 #include <QPropertyAnimation>
@@ -9,7 +9,8 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    this->treeEditor = new TreeEditor(ui->configTree);
+    TreeEditor::init(ui->configTree);
+    this->treeEditor = TreeEditor::getInstance();
     this->intermediateFormatHandler = new IntermediateFormatHandler(ui->configTree);
 }
 
@@ -90,7 +91,7 @@ void MainWindow::on_removeRowBtn_clicked()
 
 void MainWindow::reset()
 {
-    ui->configTree->clear();
+    treeEditor->reset();
 }
 
 void MainWindow::on_resetBtn_clicked()
