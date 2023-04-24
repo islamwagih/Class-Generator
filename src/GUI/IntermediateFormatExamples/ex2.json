@@ -1,0 +1,64 @@
+[
+    {
+        "name": "rect",
+        "type": "nested",
+        "constraints": [],
+        "children": [
+            {
+                "name": "x",
+                "type": "int",
+                "constraints": [-3, 3],
+                "children": []
+            },
+            {
+                "name": "y",
+                "type": "bool",
+                "constraints": [],
+                "children": []
+            },
+            {
+                "name": "width",
+                "type": "string",
+                "constraints": ["[a-z]+[0-9]+"],
+                "children": []
+            },
+            {
+                "name": "height",
+                "type": "int",
+                "constraints": [0, 1000],
+                "children": []
+            }
+        ]
+    },
+    {
+        "name": "rect",
+        "type": "nested",
+        "constraints": [],
+        "children": [
+            {
+                "name": "x",
+                "type": "int",
+                "constraints": [-3, 3],
+                "children": []
+            },
+            {
+                "name": "y",
+                "type": "bool",
+                "constraints": [],
+                "children": []
+            },
+            {
+                "name": "width",
+                "type": "string",
+                "constraints": ["[a-z]+[0-9]+"],
+                "children": []
+            },
+            {
+                "name": "height",
+                "type": "int",
+                "constraints": [0, 1000],
+                "children": []
+            }
+        ]
+    }
+]
