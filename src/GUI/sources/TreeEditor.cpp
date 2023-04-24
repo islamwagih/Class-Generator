@@ -87,7 +87,6 @@ void TreeEditor::makeRow(QTreeWidgetItem *parent)
 
 void TreeEditor::removeRow(QTreeWidgetItem *item)
 {
-    // remove the row from the tree
     delete item;
 }
 

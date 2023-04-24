@@ -1,7 +1,8 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include "..\headers\treeEditor.h"
+#include "..\headers\TreeEditor.h"
+#include "..\headers\IntermediateFormatHandler.h"
 #include <QMainWindow>
 #include <QPushButton>
 #include <QTreeWidgetItem>
@@ -19,6 +20,10 @@ class MainWindow : public QMainWindow
 
 public:
     MainWindow(QWidget *parent = nullptr);
+    void insertChild();
+    void insertRow();
+    void removeRow();
+    void reset();
     ~MainWindow();
 
 private slots:
@@ -30,8 +35,21 @@ private slots:
 
     void on_resetBtn_clicked();
 
+    void on_actionSave_triggered();
+
+    void on_actionLoad_triggered();
+
+    void on_actionInsert_Child_triggered();
+
+    void on_actionInsert_Row_triggered();
+
+    void on_actionRemove_Row_triggered();
+
+    void on_actionReset_triggered();
+
 private:
     Ui::MainWindow *ui;
     TreeEditor *treeEditor;
+    IntermediateFormatHandler *intermediateFormatHandler;
 };
 #endif // MAINWINDOW_H

@@ -3,15 +3,17 @@
 #include <QComboBox>
 #include <QPropertyAnimation>
 #include <QDebug>
+#include <QFileDialog>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    treeEditor = new TreeEditor(ui->configTree);
+    this->treeEditor = new TreeEditor(ui->configTree);
+    this->intermediateFormatHandler = new IntermediateFormatHandler(ui->configTree);
 }
 
-void MainWindow::on_insertChildBtn_clicked()
+void MainWindow::insertChild()
 {
     QTreeWidgetItem *item = ui->configTree->currentItem();
     if (item)
@@ -35,7 +37,12 @@ void MainWindow::on_insertChildBtn_clicked()
     treeEditor->makeRow(item);
 }
 
-void MainWindow::on_insertRowBn_clicked()
+void MainWindow::on_insertChildBtn_clicked()
+{
+    insertChild();
+}
+
+void MainWindow::insertRow()
 {
     QTreeWidgetItem *item = ui->configTree->currentItem();
     if (item)
@@ -62,7 +69,12 @@ void MainWindow::on_insertRowBn_clicked()
     }
 }
 
-void MainWindow::on_removeRowBtn_clicked()
+void MainWindow::on_insertRowBn_clicked()
+{
+    insertRow();
+}
+
+void MainWindow::removeRow()
 {
     QTreeWidgetItem *item = ui->configTree->currentItem();
     if (item)
@@ -71,12 +83,58 @@ void MainWindow::on_removeRowBtn_clicked()
     }
 }
 
-void MainWindow::on_resetBtn_clicked()
+void MainWindow::on_removeRowBtn_clicked()
+{
+    removeRow();
+}
+
+void MainWindow::reset()
 {
     ui->configTree->clear();
+}
+
+void MainWindow::on_resetBtn_clicked()
+{
+    reset();
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+void MainWindow::on_actionSave_triggered()
+{
+    QString filePath = QFileDialog::getSaveFileName(this, "Save File", "", "JSON File (*.json)");
+    if (filePath.isEmpty())
+        return;
+    this->intermediateFormatHandler->saveFile(filePath);
+}
+
+void MainWindow::on_actionLoad_triggered()
+{
+    QString filePath = QFileDialog::getOpenFileName(this, "Open File", "", "JSON File (*.json)");
+    if (filePath.isEmpty())
+        return;
+    this->intermediateFormatHandler->loadFile(filePath);
+}
+
+void MainWindow::on_actionInsert_Child_triggered()
+{
+    insertChild();
+}
+
+void MainWindow::on_actionInsert_Row_triggered()
+{
+    insertRow();
+}
+
+void MainWindow::on_actionRemove_Row_triggered()
+{
+    removeRow();
+}
+
+void MainWindow::on_actionReset_triggered()
+{
+    reset();
 }
