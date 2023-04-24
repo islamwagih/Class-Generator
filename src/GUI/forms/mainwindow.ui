@@ -26,7 +26,44 @@
   <property name="styleSheet">
    <string notr="true">#MainWindow{
 	background-color: rgb(44, 49, 59);
-}</string>
+}
+
+QMenuBar {
+    background-color: rgb(44, 49, 59);
+}
+
+QMenuBar::height {
+    height: 30px;
+}
+
+QMenuBar::item {
+    color: white;
+}
+
+QMenuBar::item:hover {
+    background-color: rgb(51, 57, 68);
+}
+
+QMenuBar::item:selected {
+    background-color: rgb(51, 57, 68);
+}
+
+QMenu {
+    background-color: rgb(44, 49, 59);
+}
+
+QMenu::item {
+    color: white;
+}
+
+QMenu::item:hover {
+    background-color: rgb(51, 57, 68);
+}
+
+QMenu::item:selected {
+    background-color: rgb(51, 57, 68);
+}
+</string>
   </property>
   <widget class="QWidget" name="centralWidget">
    <property name="styleSheet">
@@ -197,71 +234,7 @@ background-color: rgb(37, 40, 50);
        <enum>QFrame::Raised</enum>
       </property>
       <layout class="QGridLayout" name="gridLayout_2">
-       <item row="1" column="3">
-        <widget class="QPushButton" name="resetBtn">
-         <property name="minimumSize">
-          <size>
-           <width>200</width>
-           <height>35</height>
-          </size>
-         </property>
-         <property name="font">
-          <font>
-           <weight>75</weight>
-           <bold>true</bold>
-          </font>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">QPushButton {
-	border: 2px solid rgb(52, 59, 72);
-	background-color: rgb(241, 89, 90);
-	color: rgb(223, 223, 223);
-	border-radius: 15px;
-}
-
-QPushButton:pressed {	
-	background-color: rgb(202, 75, 75);
-	border: 2px solid rgb(43, 50, 61);
-}</string>
-         </property>
-         <property name="text">
-          <string>Reset</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="2">
-        <widget class="QPushButton" name="removeRowBtn">
-         <property name="minimumSize">
-          <size>
-           <width>200</width>
-           <height>35</height>
-          </size>
-         </property>
-         <property name="font">
-          <font>
-           <weight>75</weight>
-           <bold>true</bold>
-          </font>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">QPushButton {
-	border: 2px solid rgb(52, 59, 72);
-	background-color: rgb(241, 89, 90);
-	color: rgb(223, 223, 223);
-	border-radius: 15px;
-}
-
-QPushButton:pressed {	
-	background-color: rgb(202, 75, 75);
-	border: 2px solid rgb(43, 50, 61);
-}</string>
-         </property>
-         <property name="text">
-          <string>Remove Row</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="0">
+       <item row="1" column="1">
         <widget class="QPushButton" name="insertChildBtn">
          <property name="minimumSize">
           <size>
@@ -271,7 +244,6 @@ QPushButton:pressed {
          </property>
          <property name="font">
           <font>
-           <weight>75</weight>
            <bold>true</bold>
           </font>
          </property>
@@ -299,7 +271,69 @@ QPushButton:pressed {
          </property>
         </widget>
        </item>
-       <item row="1" column="1">
+       <item row="1" column="4">
+        <widget class="QPushButton" name="resetBtn">
+         <property name="minimumSize">
+          <size>
+           <width>200</width>
+           <height>35</height>
+          </size>
+         </property>
+         <property name="font">
+          <font>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QPushButton {
+	border: 2px solid rgb(52, 59, 72);
+	background-color: rgb(241, 89, 90);
+	color: rgb(223, 223, 223);
+	border-radius: 15px;
+}
+
+QPushButton:pressed {	
+	background-color: rgb(202, 75, 75);
+	border: 2px solid rgb(43, 50, 61);
+}</string>
+         </property>
+         <property name="text">
+          <string>Reset</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="3">
+        <widget class="QPushButton" name="removeRowBtn">
+         <property name="minimumSize">
+          <size>
+           <width>200</width>
+           <height>35</height>
+          </size>
+         </property>
+         <property name="font">
+          <font>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QPushButton {
+	border: 2px solid rgb(52, 59, 72);
+	background-color: rgb(241, 89, 90);
+	color: rgb(223, 223, 223);
+	border-radius: 15px;
+}
+
+QPushButton:pressed {	
+	background-color: rgb(202, 75, 75);
+	border: 2px solid rgb(43, 50, 61);
+}</string>
+         </property>
+         <property name="text">
+          <string>Remove Row</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0">
         <widget class="QPushButton" name="insertRowBn">
          <property name="minimumSize">
           <size>
@@ -309,7 +343,6 @@ QPushButton:pressed {
          </property>
          <property name="font">
           <font>
-           <weight>75</weight>
            <bold>true</bold>
           </font>
          </property>
@@ -613,7 +646,6 @@ QPushButton:pressed {
          </property>
          <property name="font">
           <font>
-           <weight>75</weight>
            <bold>true</bold>
           </font>
          </property>
@@ -668,8 +700,75 @@ QPushButton:pressed {
      <height>26</height>
     </rect>
    </property>
+   <widget class="QMenu" name="menuFile">
+    <property name="title">
+     <string>File</string>
+    </property>
+    <addaction name="actionSave"/>
+    <addaction name="actionLoad"/>
+   </widget>
+   <widget class="QMenu" name="menuActions">
+    <property name="title">
+     <string>Actions</string>
+    </property>
+    <addaction name="actionInsert_Row"/>
+    <addaction name="actionInsert_Child"/>
+    <addaction name="separator"/>
+    <addaction name="actionRemove_Row"/>
+    <addaction name="actionReset"/>
+   </widget>
+   <addaction name="menuFile"/>
+   <addaction name="menuActions"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
+  <action name="actionInsert_Child">
+   <property name="text">
+    <string>Insert Child</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+I, Ctrl+H</string>
+   </property>
+  </action>
+  <action name="actionInsert_Row">
+   <property name="text">
+    <string>Insert Row</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+I, Ctrl+W</string>
+   </property>
+  </action>
+  <action name="actionReset">
+   <property name="text">
+    <string>Reset</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+R, Ctrl+A</string>
+   </property>
+  </action>
+  <action name="actionSave">
+   <property name="text">
+    <string>Save</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+S</string>
+   </property>
+  </action>
+  <action name="actionLoad">
+   <property name="text">
+    <string>Load</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+L</string>
+   </property>
+  </action>
+  <action name="actionRemove_Row">
+   <property name="text">
+    <string>Remove Row</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+R, Ctrl+W</string>
+   </property>
+  </action>
  </widget>
  <resources>
   <include location="../assets/resources.qrc"/>
