@@ -35,6 +35,47 @@ void MainWindow::on_insertChildBtn_clicked()
     treeEditor->makeRow(item);
 }
 
+void MainWindow::on_insertRowBn_clicked()
+{
+    QTreeWidgetItem *item = ui->configTree->currentItem();
+    if (item)
+    {
+        // get the parent of the selected item
+        item = item->parent();
+        if (item)
+        {
+            // if the selected item has a parent, insert a row into the parent
+            treeEditor->makeRow(item);
+        }
+        else
+        {
+            // if the selected item has no parent, insert a row into the root of the tree
+            item = ui->configTree->invisibleRootItem();
+            treeEditor->makeRow(item);
+        }
+    }
+    else
+    {
+        // if no item is selected, insert a row into the root of the tree
+        item = ui->configTree->invisibleRootItem();
+        treeEditor->makeRow(item);
+    }
+}
+
+void MainWindow::on_removeRowBtn_clicked()
+{
+    QTreeWidgetItem *item = ui->configTree->currentItem();
+    if (item)
+    {
+        treeEditor->removeRow(item);
+    }
+}
+
+void MainWindow::on_resetBtn_clicked()
+{
+    ui->configTree->clear();
+}
+
 MainWindow::~MainWindow()
 {
     delete ui;

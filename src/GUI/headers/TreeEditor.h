@@ -8,6 +8,7 @@ class TreeEditor
 public:
     TreeEditor(QTreeWidget *tree);
     void makeRow(QTreeWidgetItem *parent);
+    void removeRow(QTreeWidgetItem *item);
     void onComboboxChanged(QTreeWidgetItem *item);
     ~TreeEditor();
 

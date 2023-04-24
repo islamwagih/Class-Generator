@@ -24,6 +24,12 @@ public:
 private slots:
     void on_insertChildBtn_clicked();
 
+    void on_insertRowBn_clicked();
+
+    void on_removeRowBtn_clicked();
+
+    void on_resetBtn_clicked();
+
 private:
     Ui::MainWindow *ui;
     TreeEditor *treeEditor;
