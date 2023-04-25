@@ -14,7 +14,7 @@ class TreeParser
 {
 public:
     TreeParser(QLineEdit *outDir, QComboBox *fileType, QTreeWidget *tree);
-    RootConfig parseTree();
+    RootConfig *parseTree();
     void generateClass(); // generateClass should call parseTree and any other functions you need to generate the class
     ~TreeParser();
 

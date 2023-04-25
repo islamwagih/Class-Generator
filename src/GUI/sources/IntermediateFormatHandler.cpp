@@ -7,14 +7,14 @@ IntermediateFormatHandler::IntermediateFormatHandler(QTreeWidget *tree, QComboBo
     this->treeEditor = TreeEditor::getInstance();
 }
 
-void IntermediateFormatHandler::saveFile(QString filePath, const RootConfig &allConfig)
+void IntermediateFormatHandler::saveFile(QString filePath, const RootConfig *allConfig)
 {
     // create json file
     json j;
-    j["type"] = allConfig.getFileType();
+    j["type"] = allConfig->getFileType();
 
     j["parameters"] = json::array();
-    for (auto config : allConfig.getConfigs())
+    for (auto config : allConfig->getConfigs())
     {
         j["parameters"].push_back(singleConfigToJson(config));
     }
