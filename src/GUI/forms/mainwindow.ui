@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1098</width>
-    <height>656</height>
+    <width>998</width>
+    <height>664</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -587,7 +587,7 @@ QComboBox QAbstractItemView {
          </property>
          <property name="styleSheet">
           <string notr="true">QTreeWidget::branch:has-siblings:!adjoins-item {
-	image: url(:/icons/vline.png);
+	image: url(:/icons/vline.png)0;
 }
 
 /*QTreeWidget::branch:has-siblings:!adjoins-item {
@@ -604,7 +604,7 @@ QTreeWidget::branch:closed:has-children:has-siblings {
 
 QTreeWidget::branch:open:has-children:!has-siblings,
 QTreeWidget::branch:open:has-children:has-siblings  {
-        border-image: none;
+        /*border-image: none;*/
         image: url(:/icons/branch-open.png);
 }</string>
          </property>
@@ -627,7 +627,7 @@ QTreeWidget::branch:open:has-children:has-siblings  {
           <enum>QAbstractItemView::SelectItems</enum>
          </property>
          <property name="indentation">
-          <number>12</number>
+          <number>13</number>
          </property>
          <property name="uniformRowHeights">
           <bool>false</bool>
@@ -776,7 +776,7 @@ QPushButton:pressed {
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1098</width>
+     <width>998</width>
      <height>25</height>
     </rect>
    </property>

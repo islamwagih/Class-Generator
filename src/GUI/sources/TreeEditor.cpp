@@ -12,7 +12,7 @@ TreeEditor::TreeEditor(QTreeWidget *tree) : tree(tree)
     for (int i = 0; i < tree->columnCount() - 1; ++i)
     {
         tree->header()->setSectionResizeMode(i, QHeaderView::Interactive);
-        tree->header()->resizeSection(i, 200);
+        tree->header()->resizeSection(i, 300);
     }
     tree->header()->setSectionResizeMode(tree->columnCount() - 1, QHeaderView::Stretch);
     // center the text in the header

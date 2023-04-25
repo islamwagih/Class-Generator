@@ -28,7 +28,7 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(1098, 656)
+        MainWindow.resize(998, 664)
         MainWindow.setMinimumSize(QSize(800, 600))
         icon = QIcon()
         icon.addFile(u":/icons/configuration.png", QSize(), QIcon.Normal, QIcon.Off)
@@ -499,7 +499,7 @@ class Ui_MainWindow(object):
         self.configTree.setFont(font1)
         self.configTree.setAcceptDrops(False)
         self.configTree.setStyleSheet(u"QTreeWidget::branch:has-siblings:!adjoins-item {\n"
-"	image: url(:/icons/vline.png);\n"
+"	image: url(:/icons/vline.png)0;\n"
 "}\n"
 "\n"
 "/*QTreeWidget::branch:has-siblings:!adjoins-item {\n"
@@ -516,7 +516,7 @@ class Ui_MainWindow(object):
 "\n"
 "QTreeWidget::branch:open:has-children:!has-siblings,\n"
 "QTreeWidget::branch:open:has-children:has-siblings  {\n"
-"        border-image: none;\n"
+"        /*border-image: none;*/\n"
 "        image: url(:/icons/branch-open.png);\n"
 "}")
         self.configTree.setDragDropOverwriteMode(False)
@@ -525,7 +525,7 @@ class Ui_MainWindow(object):
         self.configTree.setAlternatingRowColors(False)
         self.configTree.setSelectionMode(QAbstractItemView.NoSelection)
         self.configTree.setSelectionBehavior(QAbstractItemView.SelectItems)
-        self.configTree.setIndentation(12)
+        self.configTree.setIndentation(13)
         self.configTree.setUniformRowHeights(False)
         self.configTree.setAnimated(False)
         self.configTree.setHeaderHidden(False)
@@ -595,7 +595,7 @@ class Ui_MainWindow(object):
         MainWindow.setCentralWidget(self.centralWidget)
         self.menubar = QMenuBar(MainWindow)
         self.menubar.setObjectName(u"menubar")
-        self.menubar.setGeometry(QRect(0, 0, 1098, 25))
+        self.menubar.setGeometry(QRect(0, 0, 998, 25))
         self.menuFile = QMenu(self.menubar)
         self.menuFile.setObjectName(u"menuFile")
         self.menuActions = QMenu(self.menubar)
