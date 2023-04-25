@@ -147,6 +147,10 @@ class Ui_MainWindow(object):
         self.horizontalLayout_2.setObjectName(u"horizontalLayout_2")
         self.label = QLabel(self.frameDirectory)
         self.label.setObjectName(u"label")
+        font = QFont()
+        font.setPointSize(10)
+        font.setBold(True)
+        self.label.setFont(font)
         self.label.setStyleSheet(u"color: #FFF;")
 
         self.horizontalLayout_2.addWidget(self.label)
@@ -161,6 +165,7 @@ class Ui_MainWindow(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.typeComboBox.sizePolicy().hasHeightForWidth())
         self.typeComboBox.setSizePolicy(sizePolicy)
+        self.typeComboBox.setFont(font)
         self.typeComboBox.setStyleSheet(u"QComboBox{\n"
 "	background-color:rgb(27, 29, 35);\n"
 "	border: 0px;\n"
@@ -213,9 +218,6 @@ class Ui_MainWindow(object):
         self.insertChildBtn = QPushButton(self.frameButtons)
         self.insertChildBtn.setObjectName(u"insertChildBtn")
         self.insertChildBtn.setMinimumSize(QSize(200, 35))
-        font = QFont()
-        font.setPointSize(10)
-        font.setBold(True)
         self.insertChildBtn.setFont(font)
         self.insertChildBtn.setStyleSheet(u"QPushButton {\n"
 "	border: 2px solid rgb(52, 59, 72);\n"
@@ -248,6 +250,11 @@ class Ui_MainWindow(object):
 "	border-radius: 15px;\n"
 "}\n"
 "\n"
+"QPushButton:hover {	\n"
+"	background-color: rgb(255, 102, 102);\n"
+"	border: 2px solid rgb(43, 50, 61);\n"
+"}\n"
+"\n"
 "QPushButton:pressed {	\n"
 "	background-color: rgb(202, 75, 75);\n"
 "	border: 2px solid rgb(43, 50, 61);\n"
@@ -264,6 +271,11 @@ class Ui_MainWindow(object):
 "	background-color: rgb(241, 89, 90);\n"
 "	color: rgb(223, 223, 223);\n"
 "	border-radius: 15px;\n"
+"}\n"
+"\n"
+"QPushButton:hover {	\n"
+"	background-color: rgb(255, 102, 102);\n"
+"	border: 2px solid rgb(43, 50, 61);\n"
 "}\n"
 "\n"
 "QPushButton:pressed {	\n"

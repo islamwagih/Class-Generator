@@ -149,6 +149,12 @@ QToolButton:pressed {
         <layout class="QHBoxLayout" name="horizontalLayout_2">
          <item>
           <widget class="QLabel" name="label">
+           <property name="font">
+            <font>
+             <pointsize>10</pointsize>
+             <bold>true</bold>
+            </font>
+           </property>
            <property name="styleSheet">
             <string notr="true">color: #FFF;</string>
            </property>
@@ -164,6 +170,12 @@ QToolButton:pressed {
              <horstretch>0</horstretch>
              <verstretch>0</verstretch>
             </sizepolicy>
+           </property>
+           <property name="font">
+            <font>
+             <pointsize>10</pointsize>
+             <bold>true</bold>
+            </font>
            </property>
            <property name="styleSheet">
             <string notr="true">QComboBox{
@@ -294,6 +306,11 @@ QPushButton:pressed {
 	border-radius: 15px;
 }
 
+QPushButton:hover {	
+	background-color: rgb(255, 102, 102);
+	border: 2px solid rgb(43, 50, 61);
+}
+
 QPushButton:pressed {	
 	background-color: rgb(202, 75, 75);
 	border: 2px solid rgb(43, 50, 61);
@@ -324,6 +341,11 @@ QPushButton:pressed {
 	background-color: rgb(241, 89, 90);
 	color: rgb(223, 223, 223);
 	border-radius: 15px;
+}
+
+QPushButton:hover {	
+	background-color: rgb(255, 102, 102);
+	border: 2px solid rgb(43, 50, 61);
 }
 
 QPushButton:pressed {	
