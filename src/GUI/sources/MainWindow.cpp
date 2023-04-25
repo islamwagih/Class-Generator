@@ -11,7 +11,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
     TreeEditor::init(ui->configTree);
     this->treeEditor = TreeEditor::getInstance();
-    this->intermediateFormatHandler = new IntermediateFormatHandler(ui->configTree);
+    this->intermediateFormatHandler = new IntermediateFormatHandler(ui->configTree, ui->typeComboBox);
 }
 
 void MainWindow::insertChild()

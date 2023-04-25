@@ -1,7 +1,7 @@
 #include "..\headers\IntermediateFormatHandler.h"
 #include "..\headers\TreeEditor.h"
 #include <fstream>
-IntermediateFormatHandler::IntermediateFormatHandler(QTreeWidget *tree) : tree(tree)
+IntermediateFormatHandler::IntermediateFormatHandler(QTreeWidget *tree, QComboBox *typeComboBox) : tree(tree), typeComboBox(typeComboBox)
 {
     this->treeEditor = TreeEditor::getInstance();
 }
@@ -67,7 +67,8 @@ void IntermediateFormatHandler::loadFile(QString filePath)
     file >> j;
     file.close();
     this->treeEditor->reset();
-    for (auto &element : j.items())
+    this->typeComboBox->setCurrentText(QString::fromStdString(j["type"]));
+    for (auto &element : j["parameters"].items())
     {
         this->loadChildren(element.value(), this->tree->invisibleRootItem());
     }

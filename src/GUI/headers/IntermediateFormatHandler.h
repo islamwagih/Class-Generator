@@ -11,7 +11,7 @@ using json = nlohmann::json;
 class IntermediateFormatHandler
 {
 public:
-    IntermediateFormatHandler(QTreeWidget *tree);
+    IntermediateFormatHandler(QTreeWidget *tree, QComboBox *typeComboBox);
     void saveFile(QString filePath);
     void loadChildren(json &j, QTreeWidgetItem *parent);
     void loadFile(QString filePath);
@@ -19,6 +19,7 @@ public:
 
 private:
     QTreeWidget *tree;
+    QComboBox *typeComboBox;
     TreeEditor *treeEditor;
 };
 #endif // INTERMEDIATEFORMATHANDLER_H
