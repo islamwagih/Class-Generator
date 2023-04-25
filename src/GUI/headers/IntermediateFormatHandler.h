@@ -7,7 +7,7 @@
 #include <QTreeWidgetItem>
 #include <QComboBox>
 #include <QLineEdit>
-using json = nlohmann::json;
+using json = nlohmann::ordered_json;
 
 class IntermediateFormatHandler
 {
