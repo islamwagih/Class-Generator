@@ -10,17 +10,22 @@ CONFIG += c++17
 
 SOURCES += \
     main.cpp \
+    sources/Config.cpp \
     sources/IntermediateFormatHandler.cpp \
     sources/MainWindow.cpp \
     sources/TreeEditor.cpp \
     sources/TreeParser.cpp \
+    sources/rootconfig.cpp
 
 HEADERS += \
     ../../lib/json.hpp \
+    headers/Config.h \
     headers/IntermediateFormatHandler.h \
     headers/MainWindow.h \
     headers/TreeEditor.h \
     headers/TreeParser.h \
+    headers/rootconfig.h \
+    rootconfig.h
 
 FORMS += \
     forms/mainwindow.ui

@@ -4,3 +4,4 @@ ClassGenerator.pro.*
 *.autosave
 *.exe
 build-ClassGenerator-*
+src/GUI/assets/resources_rc.py

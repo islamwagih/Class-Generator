@@ -1,13 +1,45 @@
 #include "..\headers\IntermediateFormatHandler.h"
 #include "..\headers\TreeEditor.h"
 #include <fstream>
+#include <QDebug>
 IntermediateFormatHandler::IntermediateFormatHandler(QTreeWidget *tree, QComboBox *typeComboBox) : tree(tree), typeComboBox(typeComboBox)
 {
     this->treeEditor = TreeEditor::getInstance();
 }
 
-void IntermediateFormatHandler::saveFile(QString filePath)
+void IntermediateFormatHandler::saveFile(QString filePath, const RootConfig &allConfig)
 {
+    // create json file
+    json j;
+    j["type"] = allConfig.getFileType();
+
+    j["parameters"] = json::array();
+    for (auto config : allConfig.getConfigs())
+    {
+        j["parameters"].push_back(singleConfigToJson(config));
+    }
+
+    std::ofstream ofs(filePath.toStdString());
+    ofs << j.dump(4); // identation of 4 spaces
+    ofs.close();
+}
+
+json IntermediateFormatHandler::singleConfigToJson(const Config &config)
+{
+    json j;
+    j["name"] = config.getName();
+    j["type"] = config.getType();
+    j["constraints"] = json::array();
+    for (auto str : config.getConstraints())
+    {
+        j["constraints"].push_back(str);
+    }
+    j["children"] = json::array();
+    for (auto child : config.getChildren())
+    {
+        j["children"].push_back(singleConfigToJson(child));
+    }
+    return j;
 }
 
 void IntermediateFormatHandler::loadChildren(json &j, QTreeWidgetItem *parent)

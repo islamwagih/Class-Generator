@@ -3,6 +3,7 @@
 
 #include "..\headers\TreeEditor.h"
 #include "..\headers\IntermediateFormatHandler.h"
+#include "..\headers\TreeParser.h"
 #include <QMainWindow>
 #include <QPushButton>
 #include <QTreeWidgetItem>
@@ -35,6 +36,8 @@ private slots:
 
     void on_resetBtn_clicked();
 
+    void on_generateBtn_clicked();
+
     void on_actionSave_triggered();
 
     void on_actionLoad_triggered();
@@ -50,6 +53,7 @@ private slots:
 private:
     Ui::MainWindow *ui;
     TreeEditor *treeEditor;
+    TreeParser *treeParser;
     IntermediateFormatHandler *intermediateFormatHandler;
 };
 #endif // MAINWINDOW_H
