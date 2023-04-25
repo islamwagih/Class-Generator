@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>978</width>
-    <height>685</height>
+    <width>1098</width>
+    <height>656</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -244,6 +244,7 @@ background-color: rgb(37, 40, 50);
          </property>
          <property name="font">
           <font>
+           <pointsize>10</pointsize>
            <bold>true</bold>
           </font>
          </property>
@@ -281,6 +282,7 @@ QPushButton:pressed {
          </property>
          <property name="font">
           <font>
+           <pointsize>10</pointsize>
            <bold>true</bold>
           </font>
          </property>
@@ -312,6 +314,7 @@ QPushButton:pressed {
          </property>
          <property name="font">
           <font>
+           <pointsize>10</pointsize>
            <bold>true</bold>
           </font>
          </property>
@@ -343,6 +346,7 @@ QPushButton:pressed {
          </property>
          <property name="font">
           <font>
+           <pointsize>10</pointsize>
            <bold>true</bold>
           </font>
          </property>
@@ -371,6 +375,10 @@ QPushButton:pressed {
         </widget>
        </item>
       </layout>
+      <zorder>resetBtn</zorder>
+      <zorder>removeRowBtn</zorder>
+      <zorder>insertChildBtn</zorder>
+      <zorder>insertRowBn</zorder>
      </widget>
     </item>
     <item>
@@ -487,6 +495,7 @@ QLineEdit{
 	padding: 2px;
 	color: #FFF;
 	background-color: rgb(27, 29, 35);
+	border-radius: 10px;
 	margin-left:10 px;
 	margin-right:10 px;
 	margin-bottom: 2px;
@@ -505,6 +514,7 @@ QLineEdit:disabled {
 /***********/
 QComboBox{
 	background-color:rgb(27, 29, 35);
+	border-radius: 10px;
 	border: 0px;
 	color: #fff;
 	padding-left: 7px;
@@ -533,7 +543,8 @@ QComboBox QAbstractItemView {
 	border: 0px;
 	color: #fff;
     selection-background-color: rgb(64, 71, 88);
-}</string>
+}
+</string>
       </property>
       <property name="frameShape">
        <enum>QFrame::StyledPanel</enum>
@@ -544,11 +555,36 @@ QComboBox QAbstractItemView {
       <layout class="QGridLayout" name="gridLayout_4">
        <item row="0" column="0">
         <widget class="QTreeWidget" name="configTree">
+         <property name="font">
+          <font>
+           <pointsize>10</pointsize>
+          </font>
+         </property>
          <property name="acceptDrops">
           <bool>false</bool>
          </property>
          <property name="styleSheet">
-          <string notr="true"/>
+          <string notr="true">QTreeWidget::branch:has-siblings:!adjoins-item {
+	image: url(:/icons/vline.png);
+}
+
+/*QTreeWidget::branch:has-siblings:!adjoins-item {
+    border-image: url(vline.png) 0;
+}*/
+
+
+
+QTreeWidget::branch:has-children:!has-siblings:closed,
+QTreeWidget::branch:closed:has-children:has-siblings {
+        border-image: none;
+        image: url(:/icons/branch-closed.png);
+}
+
+QTreeWidget::branch:open:has-children:!has-siblings,
+QTreeWidget::branch:open:has-children:has-siblings  {
+        border-image: none;
+        image: url(:/icons/branch-open.png);
+}</string>
          </property>
          <property name="dragDropOverwriteMode">
           <bool>false</bool>
@@ -563,7 +599,10 @@ QComboBox QAbstractItemView {
           <bool>false</bool>
          </property>
          <property name="selectionMode">
-          <enum>QAbstractItemView::SingleSelection</enum>
+          <enum>QAbstractItemView::NoSelection</enum>
+         </property>
+         <property name="selectionBehavior">
+          <enum>QAbstractItemView::SelectItems</enum>
          </property>
          <property name="indentation">
           <number>12</number>
@@ -593,15 +632,33 @@ QComboBox QAbstractItemView {
           <property name="text">
            <string>Name</string>
           </property>
+          <property name="font">
+           <font>
+            <pointsize>10</pointsize>
+            <bold>true</bold>
+           </font>
+          </property>
          </column>
          <column>
           <property name="text">
            <string>Type</string>
           </property>
+          <property name="font">
+           <font>
+            <pointsize>10</pointsize>
+            <bold>true</bold>
+           </font>
+          </property>
          </column>
          <column>
           <property name="text">
            <string>Constraints</string>
+          </property>
+          <property name="font">
+           <font>
+            <pointsize>10</pointsize>
+            <bold>true</bold>
+           </font>
           </property>
          </column>
         </widget>
@@ -646,6 +703,7 @@ QPushButton:pressed {
          </property>
          <property name="font">
           <font>
+           <pointsize>10</pointsize>
            <bold>true</bold>
           </font>
          </property>
@@ -696,8 +754,8 @@ QPushButton:pressed {
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>978</width>
-     <height>26</height>
+     <width>1098</width>
+     <height>25</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
