@@ -1,6 +1,7 @@
 {
+    "class_name": "spaces_are_not_allowed_in_class_name",
     "type": "XML",
-    "parameters":[
+    "parameters": [
         {
             "name": "rect",
             "type": "nested",
@@ -9,7 +10,10 @@
                 {
                     "name": "x",
                     "type": "int",
-                    "constraints": [-3, 3],
+                    "constraints": [
+                        -3,
+                        3
+                    ],
                     "children": []
                 },
                 {
@@ -21,13 +25,18 @@
                 {
                     "name": "width",
                     "type": "string",
-                    "constraints": ["[a-z]+[0-9]+"],
+                    "constraints": [
+                        "[a-z]+[0-9]+"
+                    ],
                     "children": []
                 },
                 {
                     "name": "height",
                     "type": "int",
-                    "constraints": [0, 1000],
+                    "constraints": [
+                        0,
+                        1000
+                    ],
                     "children": []
                 }
             ]
@@ -40,7 +49,10 @@
                 {
                     "name": "x",
                     "type": "int",
-                    "constraints": [-3, 3],
+                    "constraints": [
+                        -3,
+                        3
+                    ],
                     "children": []
                 },
                 {
@@ -52,13 +64,18 @@
                 {
                     "name": "width",
                     "type": "string",
-                    "constraints": ["[a-z]+[0-9]+"],
+                    "constraints": [
+                        "[a-z]+[0-9]+"
+                    ],
                     "children": []
                 },
                 {
                     "name": "height",
                     "type": "int",
-                    "constraints": [0, 1000],
+                    "constraints": [
+                        0,
+                        1000
+                    ],
                     "children": []
                 }
             ]

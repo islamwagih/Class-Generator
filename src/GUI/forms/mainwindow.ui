@@ -63,7 +63,37 @@ QMenu::item:hover {
 QMenu::item:selected {
     background-color: rgb(51, 57, 68);
 }
-</string>
+QComboBox{
+	background-color:rgb(27, 29, 35);
+	border: 0px;
+	color: #fff;
+	padding-left: 15px;
+	height: 30px;
+}
+QComboBox::hover{
+	border: 2px solid rgb(64, 71, 88);
+}
+QComboBox::drop-down {
+	subcontrol-origin: padding;
+	subcontrol-position: top right;
+	width: 23px;
+	border-left-width: 3px;
+	border-left-color: rgba(39, 44, 54, 150);
+	border-left-style: solid;
+	border-top-right-radius: 3px;
+	border-bottom-right-radius: 3px;
+	image: url(:/icons/arrowDown.png);
+ }
+QComboBox::disabled {
+	background-color: #3f3f3f;
+    color: #656565;
+}
+QComboBox QAbstractItemView {
+    background-color:rgb(27, 29, 35);
+	border: 0px;
+	color: #fff;
+    selection-background-color: rgb(64, 71, 88);
+}</string>
   </property>
   <widget class="QWidget" name="centralWidget">
    <property name="styleSheet">
@@ -187,27 +217,6 @@ QToolButton:pressed {
 }
 QComboBox::hover{
 	border: 2px solid rgb(64, 71, 88);
-}
-QComboBox::drop-down {
-	subcontrol-origin: padding;
-	subcontrol-position: top right;
-	width: 23px;
-	border-left-width: 3px;
-	border-left-color: rgba(39, 44, 54, 150);
-	border-left-style: solid;
-	border-top-right-radius: 3px;
-	border-bottom-right-radius: 3px;
-	image: url(:/icons/arrowDown.png);
- }
-QComboBox::disabled {
-	background-color: #3f3f3f;
-    color: #656565;
-}
-QComboBox QAbstractItemView {
-    background-color:rgb(27, 29, 35);
-	border: 0px;
-	color: #fff;
-    selection-background-color: rgb(64, 71, 88);
 }</string>
            </property>
            <item>
@@ -777,7 +786,7 @@ QPushButton:pressed {
      <x>0</x>
      <y>0</y>
      <width>998</width>
-     <height>25</height>
+     <height>26</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
