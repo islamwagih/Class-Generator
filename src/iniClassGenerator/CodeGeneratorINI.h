@@ -14,7 +14,10 @@ class CodeGeneratorINI
 {
 private:
 	Config config;
-	void addPreprocessors(std::vector<std::string>&);
+	std::string indentation;
+	void appendPreprocessors(std::vector<std::string>&);
+	std::string getOutputClassName();
+	void appendSingletonSection(std::vector<std::string>&);
 public:
 	CodeGeneratorINI(const Config& c);
 	std::vector<std::string> generateParserH();
