@@ -25,5 +25,6 @@ private:
     TreeEditor *treeEditor;
     json singleConfigToJson(const Config &config);
     void loadChildren(json &j, QTreeWidgetItem *parent);
+    json _rootConfigToJson(const RootConfig *allConfig);
 };
 #endif // INTERMEDIATEFORMATHANDLER_H

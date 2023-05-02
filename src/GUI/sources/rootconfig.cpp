@@ -2,8 +2,8 @@
 
 RootConfig *RootConfig::instance = nullptr;
 
-RootConfig::RootConfig(const std::vector<Config> &configs, const std::string &fileType)
-    : configs(configs), fileType(fileType)
+RootConfig::RootConfig(const std::vector<Config> &configs, const std::string &fileType, const std::string &className)
+    : configs(configs), fileType(fileType), className(className)
 {
 }
 
@@ -17,6 +17,11 @@ std::string RootConfig::getFileType() const
     return this->fileType;
 }
 
+std::string RootConfig::getClassName() const
+{
+    return this->className;
+}
+
 void RootConfig::setConfigs(const std::vector<Config> &configs)
 {
     this->configs = configs;
@@ -27,16 +32,22 @@ void RootConfig::setFileType(const std::string &fileType)
     this->fileType = fileType;
 }
 
-RootConfig *RootConfig::InitInstance(const std::vector<Config> &configs, const std::string &fileType)
+void RootConfig::setClassName(const std::string &className)
+{
+    this->className = className;
+}
+
+RootConfig *RootConfig::InitInstance(const std::vector<Config> &configs, const std::string &fileType, const std::string &className)
 {
     if (instance == nullptr)
     {
-        instance = new RootConfig(configs, fileType);
+        instance = new RootConfig(configs, fileType, className);
     }
     else
     {
         instance->setConfigs(configs);
         instance->setFileType(fileType);
+        instance->setClassName(className);
     }
     return instance;
 }
