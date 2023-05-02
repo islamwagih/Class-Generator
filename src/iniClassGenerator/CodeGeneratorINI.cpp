@@ -15,6 +15,13 @@ std::vector<std::string> CodeGeneratorINI::generateParserH()
 	appendPreprocessors(file);
 
 	//Add class name
+	std::string parserClassName = "Parser";
+	addLine("class" + parserClassName,file);
+	addLine("{",file);
+	changeIndentationLvl(1);
+
+	//Add private section
+	addLine("Parser* parser;",file);
 
 
 
@@ -25,14 +32,14 @@ std::vector<std::string> CodeGeneratorINI::generateParserH()
 
 void CodeGeneratorINI::appendPreprocessors(std::vector<std::string>& file)
 {
-	file.push_back("#ifndef PARSER_HPP");
-	file.push_back("#define PARSER_HPP");
-	file.push_back("");
-	file.push_back("#include <map>");
-	file.push_back("#include <vector>");
-	file.push_back("#include <vector>");
+	addLine("#ifndef PARSER_HPP",file);
+	addLine("#define PARSER_HPP",file);
+	addLine("",file);
+	addLine("#include <map>",file);
+	addLine("#include <vector>",file);
+	addLine("#include <vector>",file);
 //	file.push_back("#include \"parser_lib.hpp\""); //Removed for now
-	file.push_back("");
+	addLine("",file);
 }
 
 std::string CodeGeneratorINI::getOutputClassName()
@@ -44,4 +51,17 @@ std::string CodeGeneratorINI::getOutputClassName()
 void CodeGeneratorINI::appendSingletonSection(std::vector<std::string>& file)
 {
 
+}
+
+void CodeGeneratorINI::changeIndentationLvl(int change)
+{
+	indentationLvl+= change;
+	indentation = "";
+	for (int i=0; i<indentationLvl; i++)
+	      indentation+=(char)9; //(char)9 is the ascii for the tab character
+}
+
+void CodeGeneratorINI::addLine(const std::string& line, std::vector<std::string>& file)
+{
+	file.push_back(indentation+line);
 }
