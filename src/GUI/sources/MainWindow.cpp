@@ -10,6 +10,7 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
     TreeEditor::init(ui->configTree);
+    this->saveFilePath = "";
     this->treeEditor = TreeEditor::getInstance();
     this->treeParser = new TreeParser(ui->outEdit, ui->typeComboBox, ui->configTree);
     this->intermediateFormatHandler = new IntermediateFormatHandler(ui->configTree, ui->typeComboBox);
@@ -112,10 +113,30 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_actionSave_triggered()
 {
+    if (this->saveFilePath.isEmpty())
+    {
+        if (!getSaveFilePath())
+        {
+            return;
+        }
+    }
+    this->intermediateFormatHandler->saveFile(this->saveFilePath, this->treeParser->parseTree());
+}
+
+void MainWindow::on_actionSave_As_triggered()
+{
+    if (!getSaveFilePath())
+        return;
+    this->intermediateFormatHandler->saveFile(this->saveFilePath, this->treeParser->parseTree());
+}
+
+bool MainWindow::getSaveFilePath()
+{
     QString filePath = QFileDialog::getSaveFileName(this, "Save File", "", "JSON File (*.json)");
     if (filePath.isEmpty())
-        return;
-    this->intermediateFormatHandler->saveFile(filePath,this->treeParser->parseTree());
+        return false;
+    this->saveFilePath = filePath;
+    return true;
 }
 
 void MainWindow::on_actionLoad_triggered()

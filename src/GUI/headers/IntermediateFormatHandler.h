@@ -14,7 +14,7 @@ class IntermediateFormatHandler
 public:
     IntermediateFormatHandler(QTreeWidget *tree, QComboBox *typeComboBox);
     void saveFile(QString filePath, const RootConfig *allConfig);
-    void loadChildren(json &j, QTreeWidgetItem *parent);
+    void saveFileAs(QString filePath, const RootConfig *allConfig);
     void loadFile(QString filePath);
     ~IntermediateFormatHandler();
 
@@ -23,5 +23,7 @@ private:
     QComboBox *typeComboBox;
     TreeEditor *treeEditor;
     json singleConfigToJson(const Config &config);
+    void loadChildren(json &j, QTreeWidgetItem *parent);
+    
 };
 #endif // INTERMEDIATEFORMATHANDLER_H

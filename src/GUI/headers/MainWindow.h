@@ -50,10 +50,14 @@ private slots:
 
     void on_actionReset_triggered();
 
+    void on_actionSave_As_triggered();
+
 private:
     Ui::MainWindow *ui;
+    QString saveFilePath;
     TreeEditor *treeEditor;
     TreeParser *treeParser;
     IntermediateFormatHandler *intermediateFormatHandler;
+    bool getSaveFilePath();
 };
 #endif // MAINWINDOW_H
