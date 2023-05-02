@@ -9,12 +9,12 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    TreeEditor::init(ui->configTree);
+    TreeEditor::init(ui->configTree, ui->statusBar);
 
     // initialize member variables
     this->saveFilePath = "";
     this->treeEditor = TreeEditor::getInstance();
-    this->treeParser = new TreeParser(ui->outEdit,ui->classNameEdit, ui->typeComboBox, ui->configTree);
+    this->treeParser = new TreeParser(ui->outEdit, ui->classNameEdit, ui->typeComboBox, ui->configTree);
     this->intermediateFormatHandler = new IntermediateFormatHandler(ui->classNameEdit, ui->typeComboBox, ui->configTree);
 
     // Set QValidators
@@ -114,11 +114,6 @@ void MainWindow::on_generateBtn_clicked()
     treeParser->parseTree();
 }
 
-MainWindow::~MainWindow()
-{
-    delete ui;
-}
-
 void MainWindow::on_actionSave_triggered()
 {
     if (this->saveFilePath.isEmpty())
@@ -173,4 +168,9 @@ void MainWindow::on_actionRemove_Row_triggered()
 void MainWindow::on_actionReset_triggered()
 {
     reset();
+}
+
+MainWindow::~MainWindow()
+{
+    delete ui;
 }

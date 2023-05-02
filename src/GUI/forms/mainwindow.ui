@@ -28,6 +28,10 @@
 	background-color: rgb(44, 49, 59);
 }
 
+QStatusBar {
+	color: rgb(205, 57, 47);
+}
+
 QMenuBar {
     background-color: rgb(44, 49, 59);
 }
@@ -841,7 +845,14 @@ QPushButton:pressed {
    <addaction name="menuFile"/>
    <addaction name="menuActions"/>
   </widget>
-  <widget class="QStatusBar" name="statusbar"/>
+  <widget class="QStatusBar" name="statusBar">
+   <property name="font">
+    <font>
+     <pointsize>10</pointsize>
+     <bold>true</bold>
+    </font>
+   </property>
+  </widget>
   <action name="actionInsert_Child">
    <property name="text">
     <string>Insert Child</string>
