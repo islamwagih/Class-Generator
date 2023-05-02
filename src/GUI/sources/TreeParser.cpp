@@ -1,6 +1,7 @@
 #include "headers/TreeParser.h"
 
-TreeParser::TreeParser(QLineEdit *outDir, QComboBox *fileType, QTreeWidget *tree) : outDir(outDir), fileType(fileType), tree(tree)
+TreeParser::TreeParser(QLineEdit *outDir, QLineEdit *className, QComboBox *fileType, QTreeWidget *tree)
+    : outDir(outDir), className(className), fileType(fileType), tree(tree)
 {
 }
 
@@ -15,7 +16,7 @@ RootConfig *TreeParser::parseTree()
 
         allConfigs.push_back(this->_parseItem(item));
     }
-    return RootConfig::InitInstance(allConfigs, fileType->currentText().toStdString());
+    return RootConfig::InitInstance(allConfigs, fileType->currentText().toStdString(), className->text().toStdString());
 }
 
 Config TreeParser::_parseItem(QTreeWidgetItem *item)

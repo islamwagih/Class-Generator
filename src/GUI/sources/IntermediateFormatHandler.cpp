@@ -14,6 +14,7 @@ json IntermediateFormatHandler::_rootConfigToJson(const RootConfig *allConfig)
 {
     // create json file
     json jsonData;
+    jsonData["class_name"] = allConfig->getClassName();
     jsonData["type"] = allConfig->getFileType();
 
     jsonData["parameters"] = json::array();
@@ -22,9 +23,7 @@ json IntermediateFormatHandler::_rootConfigToJson(const RootConfig *allConfig)
         jsonData["parameters"].push_back(singleConfigToJson(config));
     }
     return jsonData;
-
 }
-
 
 void IntermediateFormatHandler::saveFile(QString filePath, const RootConfig *allConfig)
 {

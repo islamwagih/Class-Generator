@@ -12,7 +12,7 @@ MainWindow::MainWindow(QWidget *parent)
     TreeEditor::init(ui->configTree);
     this->saveFilePath = "";
     this->treeEditor = TreeEditor::getInstance();
-    this->treeParser = new TreeParser(ui->outEdit, ui->typeComboBox, ui->configTree);
+    this->treeParser = new TreeParser(ui->outEdit,ui->classNameEdit, ui->typeComboBox, ui->configTree);
     this->intermediateFormatHandler = new IntermediateFormatHandler(ui->classNameEdit, ui->typeComboBox, ui->configTree);
 }
 
@@ -94,6 +94,9 @@ void MainWindow::on_removeRowBtn_clicked()
 void MainWindow::reset()
 {
     treeEditor->reset();
+    ui->outEdit->clear();
+    ui->classNameEdit->clear();
+    ui->typeComboBox->setCurrentIndex(0);
 }
 
 void MainWindow::on_resetBtn_clicked()
