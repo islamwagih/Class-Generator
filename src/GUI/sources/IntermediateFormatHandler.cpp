@@ -40,17 +40,44 @@ json IntermediateFormatHandler::singleConfigToJson(const Config &config)
     json jsonData;
     jsonData["name"] = config.getName();
     jsonData["type"] = config.getType();
-    jsonData["constraints"] = json::array();
-    for (auto str : config.getConstraints())
-    {
-        jsonData["constraints"].push_back(str);
-    }
+    _InsertConstraints(jsonData, config);
     jsonData["children"] = json::array();
     for (auto child : config.getChildren())
     {
         jsonData["children"].push_back(singleConfigToJson(child));
     }
     return jsonData;
+}
+void IntermediateFormatHandler::_InsertConstraints(json &jsonData, const Config &config)
+{
+    jsonData["constraints"] = json::array();
+    for (auto constraint : config.getConstraints())
+    {
+        bool isDouble = false;
+        for (auto c : constraint)
+        {
+            if (c == '.')
+            {
+                isDouble = true;
+                break;
+            }
+        }
+        try
+        {
+            if (isDouble)
+            {
+                jsonData["constraints"].push_back(std::stod(constraint));
+            }
+            else
+            {
+                jsonData["constraints"].push_back(std::stoi(constraint));
+            }
+        }
+        catch (std::exception e)
+        {
+            jsonData["constraints"].push_back(constraint);
+        }
+    }
 }
 
 void IntermediateFormatHandler::loadChildren(json &j, QTreeWidgetItem *parent)
