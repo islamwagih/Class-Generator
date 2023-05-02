@@ -2,9 +2,12 @@
 #include "..\headers\TreeEditor.h"
 #include <fstream>
 #include <QDebug>
-IntermediateFormatHandler::IntermediateFormatHandler(QTreeWidget *tree, QComboBox *typeComboBox) : tree(tree), typeComboBox(typeComboBox)
+IntermediateFormatHandler::IntermediateFormatHandler(QLineEdit *classNameEdit, QComboBox *typeComboBox, QTreeWidget *tree)
 {
+    this->tree = tree;
+    this->typeComboBox = typeComboBox;
     this->treeEditor = TreeEditor::getInstance();
+    this->classNameEdit = classNameEdit;
 }
 
 void IntermediateFormatHandler::saveFile(QString filePath, const RootConfig *allConfig)
@@ -100,6 +103,7 @@ void IntermediateFormatHandler::loadFile(QString filePath)
     file.close();
     this->treeEditor->reset();
     this->typeComboBox->setCurrentText(QString::fromStdString(j["type"]));
+    this->classNameEdit->setText(QString::fromStdString(j["class_name"]));
     for (auto &element : j["parameters"].items())
     {
         this->loadChildren(element.value(), this->tree->invisibleRootItem());

@@ -13,7 +13,7 @@ MainWindow::MainWindow(QWidget *parent)
     this->saveFilePath = "";
     this->treeEditor = TreeEditor::getInstance();
     this->treeParser = new TreeParser(ui->outEdit, ui->typeComboBox, ui->configTree);
-    this->intermediateFormatHandler = new IntermediateFormatHandler(ui->configTree, ui->typeComboBox);
+    this->intermediateFormatHandler = new IntermediateFormatHandler(ui->classNameEdit, ui->typeComboBox, ui->configTree);
 }
 
 void MainWindow::insertChild()
