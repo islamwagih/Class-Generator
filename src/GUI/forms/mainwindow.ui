@@ -133,13 +133,16 @@ QLineEdit:focus{
 	border: 2px solid rgb(91, 101, 124);
 }</string>
            </property>
+           <property name="readOnly">
+            <bool>true</bool>
+           </property>
            <property name="placeholderText">
             <string>Output Directory</string>
            </property>
           </widget>
          </item>
          <item>
-          <widget class="QToolButton" name="toolButton">
+          <widget class="QToolButton" name="outBrowseBtn">
            <property name="minimumSize">
             <size>
              <width>40</width>
