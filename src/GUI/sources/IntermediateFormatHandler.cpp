@@ -10,17 +10,26 @@ IntermediateFormatHandler::IntermediateFormatHandler(QLineEdit *classNameEdit, Q
     this->classNameEdit = classNameEdit;
 }
 
+json IntermediateFormatHandler::_rootConfigToJson(const RootConfig *allConfig)
+{
+    // create json file
+    json jsonData;
+    jsonData["type"] = allConfig->getFileType();
+
+    jsonData["parameters"] = json::array();
+    for (auto config : allConfig->getConfigs())
+    {
+        jsonData["parameters"].push_back(singleConfigToJson(config));
+    }
+    return jsonData;
+
+}
+
+
 void IntermediateFormatHandler::saveFile(QString filePath, const RootConfig *allConfig)
 {
     // create json file
-    json j;
-    j["type"] = allConfig->getFileType();
-
-    j["parameters"] = json::array();
-    for (auto config : allConfig->getConfigs())
-    {
-        j["parameters"].push_back(singleConfigToJson(config));
-    }
+    json j = _rootConfigToJson(allConfig);
 
     std::ofstream ofs(filePath.toStdString());
     ofs << j.dump(4); // identation of 4 spaces
@@ -29,20 +38,20 @@ void IntermediateFormatHandler::saveFile(QString filePath, const RootConfig *all
 
 json IntermediateFormatHandler::singleConfigToJson(const Config &config)
 {
-    json j;
-    j["name"] = config.getName();
-    j["type"] = config.getType();
-    j["constraints"] = json::array();
+    json jsonData;
+    jsonData["name"] = config.getName();
+    jsonData["type"] = config.getType();
+    jsonData["constraints"] = json::array();
     for (auto str : config.getConstraints())
     {
-        j["constraints"].push_back(str);
+        jsonData["constraints"].push_back(str);
     }
-    j["children"] = json::array();
+    jsonData["children"] = json::array();
     for (auto child : config.getChildren())
     {
-        j["children"].push_back(singleConfigToJson(child));
+        jsonData["children"].push_back(singleConfigToJson(child));
     }
-    return j;
+    return jsonData;
 }
 
 void IntermediateFormatHandler::loadChildren(json &j, QTreeWidgetItem *parent)
