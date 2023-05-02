@@ -170,6 +170,39 @@ QToolButton:pressed {
         </layout>
        </item>
        <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_3">
+         <item>
+          <widget class="QLineEdit" name="classNameEdit">
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>40</height>
+            </size>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">QLineEdit{
+	border: 0px solid rgb(37, 39, 48);
+	border-radius: 15px;
+	color: #FFF;
+	padding-left: 20px;
+	padding-right: 20px;
+	background-color: rgb(27, 29, 35);
+}
+QLineEdit:hover{
+	border: 2px solid rgb(64, 71, 88)
+}
+QLineEdit:focus{
+	border: 2px solid rgb(91, 101, 124);
+}</string>
+           </property>
+           <property name="placeholderText">
+            <string>Class Name</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
         <layout class="QHBoxLayout" name="horizontalLayout_2">
          <item>
           <widget class="QLabel" name="label">
