@@ -10,10 +10,15 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
     TreeEditor::init(ui->configTree);
+
+    // initialize member variables
     this->saveFilePath = "";
     this->treeEditor = TreeEditor::getInstance();
     this->treeParser = new TreeParser(ui->outEdit, ui->typeComboBox, ui->configTree);
     this->intermediateFormatHandler = new IntermediateFormatHandler(ui->classNameEdit, ui->typeComboBox, ui->configTree);
+
+    // Set QValidators
+    ui->classNameEdit->setValidator(new QRegExpValidator(QRegExp("[a-zA-Z_][a-zA-Z0-9_]*"), this));
 }
 
 void MainWindow::insertChild()
