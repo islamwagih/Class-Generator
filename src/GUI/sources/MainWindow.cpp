@@ -107,6 +107,11 @@ void MainWindow::on_resetBtn_clicked()
 
 void MainWindow::on_generateBtn_clicked()
 {
+    if (ui->outEdit->text().isEmpty())
+    {
+        QMessageBox::warning(this, "Warning", "Please choose an output directory");
+        return;
+    }
     int status = this->treeParser->validateTree(ui->configTree->invisibleRootItem());
     switch (status)
     {
@@ -183,6 +188,12 @@ void MainWindow::on_actionRemove_Row_triggered()
 void MainWindow::on_actionReset_triggered()
 {
     reset();
+}
+
+void MainWindow::on_outBrowseBtn_clicked()
+{
+    QString dir = QFileDialog::getExistingDirectory(this, "Select Output Directory", "", QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
+    ui->outEdit->setText(dir);
 }
 
 MainWindow::~MainWindow()

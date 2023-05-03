@@ -56,6 +56,8 @@ private slots:
 
     void on_actionSave_As_triggered();
 
+    void on_outBrowseBtn_clicked();
+
 private:
     Ui::MainWindow *ui;
     QString saveFilePath;
