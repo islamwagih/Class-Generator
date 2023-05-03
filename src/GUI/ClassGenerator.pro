@@ -15,7 +15,8 @@ SOURCES += \
     sources/MainWindow.cpp \
     sources/TreeEditor.cpp \
     sources/TreeParser.cpp \
-    sources/rootconfig.cpp
+    sources/rootconfig.cpp \
+    sources/StateHandler.cpp
 
 HEADERS += \
     ../../lib/json.hpp \
@@ -25,7 +26,8 @@ HEADERS += \
     headers/TreeEditor.h \
     headers/TreeParser.h \
     headers/rootconfig.h \
-    headers/rootconfig.h
+    headers/rootconfig.h \
+    headers/StateHandler.h
 
 FORMS += \
     forms/mainwindow.ui

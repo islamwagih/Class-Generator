@@ -5,13 +5,24 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    TreeEditor::init(ui->configTree, ui->statusBar);
+
+    // initialize singleton classes
+    TreeEditor::init(ui->configTree, ui->statusBar, [this]()
+                     { this->stateHandler->saveState(); });
+    TreeParser::init(ui->outEdit, ui->classNameEdit, ui->typeComboBox, ui->configTree);
+    IntermediateFormatHandler::init(ui->classNameEdit, ui->typeComboBox, ui->configTree);
+    StateHandler::init(this->intermediateFormatHandler, this->treeParser, [this]()
+                       { this->reset(); });
 
     // initialize member variables
     this->saveFilePath = "";
+
     this->treeEditor = TreeEditor::getInstance();
-    this->treeParser = new TreeParser(ui->outEdit, ui->classNameEdit, ui->typeComboBox, ui->configTree);
-    this->intermediateFormatHandler = new IntermediateFormatHandler(ui->classNameEdit, ui->typeComboBox, ui->configTree);
+    this->treeParser = TreeParser::getInstance();
+    this->intermediateFormatHandler = IntermediateFormatHandler::getInstance();
+    this->stateHandler = StateHandler::getInstance();
+
+    this->stateHandler->saveState();
 
     // Set QValidators
     ui->classNameEdit->setValidator(new QRegExpValidator(QRegExp("[a-zA-Z_][a-zA-Z0-9_]*"), this));
@@ -39,6 +50,7 @@ void MainWindow::insertChild()
         item = ui->configTree->invisibleRootItem();
     }
     treeEditor->makeRow(item);
+    this->stateHandler->saveState();
 }
 
 void MainWindow::on_insertChildBtn_clicked()
@@ -71,6 +83,7 @@ void MainWindow::insertRow()
         item = ui->configTree->invisibleRootItem();
         treeEditor->makeRow(item);
     }
+    this->stateHandler->saveState();
 }
 
 void MainWindow::on_insertRowBn_clicked()
@@ -85,6 +98,7 @@ void MainWindow::removeRow()
     {
         treeEditor->removeRow(item);
     }
+    this->stateHandler->saveState();
 }
 
 void MainWindow::on_removeRowBtn_clicked()
@@ -98,6 +112,7 @@ void MainWindow::reset()
     ui->outEdit->clear();
     ui->classNameEdit->clear();
     ui->typeComboBox->setCurrentIndex(0);
+    this->stateHandler->saveState();
 }
 
 void MainWindow::on_resetBtn_clicked()
@@ -167,11 +182,15 @@ void MainWindow::on_actionLoad_triggered()
     QString filePath = QFileDialog::getOpenFileName(this, "Open File", "", "JSON File (*.json)");
     if (filePath.isEmpty())
         return;
+    this->stateHandler->setLoadingState(true);
     if (!this->intermediateFormatHandler->loadFile(filePath))
     {
         QMessageBox::warning(this, "Warning", "Invalid File");
+        this->stateHandler->setLoadingState(false);
         return;
     }
+    this->stateHandler->setLoadingState(false);
+    this->stateHandler->saveState();
 }
 
 void MainWindow::on_actionInsert_Child_triggered()
@@ -198,6 +217,27 @@ void MainWindow::on_outBrowseBtn_clicked()
 {
     QString dir = QFileDialog::getExistingDirectory(this, "Select Output Directory", "", QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
     ui->outEdit->setText(dir);
+    this->stateHandler->saveState();
+}
+
+void MainWindow::on_actionUndo_triggered()
+{
+    this->stateHandler->undo();
+}
+
+void MainWindow::on_actionRedo_triggered()
+{
+    this->stateHandler->redo();
+}
+
+void MainWindow::on_typeComboBox_currentIndexChanged(int index)
+{
+    this->stateHandler->saveState();
+}
+
+void MainWindow::on_classNameEdit_textEdited(const QString &arg1)
+{
+    this->stateHandler->saveState();
 }
 
 MainWindow::~MainWindow()

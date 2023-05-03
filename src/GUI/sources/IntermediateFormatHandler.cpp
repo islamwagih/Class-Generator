@@ -3,6 +3,8 @@
 #include <fstream>
 #include <QDebug>
 
+IntermediateFormatHandler *IntermediateFormatHandler::instance = nullptr;
+
 IntermediateFormatHandler::IntermediateFormatHandler(QLineEdit *classNameEdit, QComboBox *typeComboBox, QTreeWidget *tree)
 {
     this->classNameEdit = classNameEdit;
@@ -11,7 +13,21 @@ IntermediateFormatHandler::IntermediateFormatHandler(QLineEdit *classNameEdit, Q
     this->treeEditor = TreeEditor::getInstance();
 }
 
-json IntermediateFormatHandler::_rootConfigToJson(const RootConfig *allConfig)
+void IntermediateFormatHandler::init(QLineEdit *classNameEdit, QComboBox *typeComboBox, QTreeWidget *tree)
+{
+    instance = new IntermediateFormatHandler(classNameEdit, typeComboBox, tree);
+}
+
+IntermediateFormatHandler *IntermediateFormatHandler::getInstance()
+{
+    if (instance == nullptr)
+    {
+        throw std::runtime_error("IntermediateFormatHandler instance not initialized");
+    }
+    return instance;
+}
+
+json IntermediateFormatHandler::rootConfigToJson(const RootConfig *allConfig)
 {
     // create json file
     json jsonData;
@@ -29,7 +45,7 @@ json IntermediateFormatHandler::_rootConfigToJson(const RootConfig *allConfig)
 void IntermediateFormatHandler::saveFile(QString filePath, const RootConfig *allConfig)
 {
     // create json file
-    json j = _rootConfigToJson(allConfig);
+    json j = rootConfigToJson(allConfig);
 
     std::ofstream ofs(filePath.toStdString());
     ofs << j.dump(4); // identation of 4 spaces
@@ -95,6 +111,12 @@ bool IntermediateFormatHandler::loadFile(QString filePath)
     {
         return false;
     }
+    loadJson(j);
+    return true;
+}
+
+void IntermediateFormatHandler::loadJson(json &j)
+{
     this->treeEditor->reset();
     this->typeComboBox->setCurrentText(QString::fromStdString(j["type"]));
     this->classNameEdit->setText(QString::fromStdString(j["class_name"]));
@@ -102,7 +124,6 @@ bool IntermediateFormatHandler::loadFile(QString filePath)
     {
         this->loadChildren(element.value(), this->tree->invisibleRootItem());
     }
-    return true;
 }
 
 bool IntermediateFormatHandler::checkJsonToLoad(json &j)
