@@ -26,5 +26,6 @@ private:
     json singleConfigToJson(const Config &config);
     void loadChildren(json &j, QTreeWidgetItem *parent);
     json _rootConfigToJson(const RootConfig *allConfig);
+    void _InsertConstraints(json &jsonData, const Config &config);
 };
 #endif // INTERMEDIATEFORMATHANDLER_H
