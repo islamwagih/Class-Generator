@@ -4,10 +4,10 @@
 #include <QDebug>
 IntermediateFormatHandler::IntermediateFormatHandler(QLineEdit *classNameEdit, QComboBox *typeComboBox, QTreeWidget *tree)
 {
-    this->tree = tree;
-    this->typeComboBox = typeComboBox;
-    this->treeEditor = TreeEditor::getInstance();
     this->classNameEdit = classNameEdit;
+    this->typeComboBox = typeComboBox;
+    this->tree = tree;
+    this->treeEditor = TreeEditor::getInstance();
 }
 
 json IntermediateFormatHandler::_rootConfigToJson(const RootConfig *allConfig)
@@ -80,6 +80,146 @@ void IntermediateFormatHandler::_InsertConstraints(json &jsonData, const Config 
     }
 }
 
+bool IntermediateFormatHandler::loadFile(QString filePath)
+{
+    std::ifstream file(filePath.toStdString());
+    json j;
+    file >> j;
+    file.close();
+    if (!checkJsonToLoad(j))
+    {
+        return false;
+    }
+    this->treeEditor->reset();
+    this->typeComboBox->setCurrentText(QString::fromStdString(j["type"]));
+    this->classNameEdit->setText(QString::fromStdString(j["class_name"]));
+    for (auto &element : j["parameters"].items())
+    {
+        this->loadChildren(element.value(), this->tree->invisibleRootItem());
+    }
+    return true;
+}
+
+bool IntermediateFormatHandler::checkJsonToLoad(json &j)
+{
+    if (
+        !j["class_name"].is_string() ||
+        !j["type"].is_string() ||
+        !j["parameters"].is_array() ||
+        j.size() != 3)
+    {
+        return false;
+    }
+    return checkJsonChildren(j["parameters"]);
+}
+
+bool IntermediateFormatHandler::checkJsonChildren(json &j)
+{
+    std::set<std::string> names;
+    for (auto &element : j.items())
+    {
+        auto name = element.value()["name"];
+        auto type = element.value()["type"];
+        auto constraints = element.value()["constraints"];
+        auto children = element.value()["children"];
+        // 1. Check if all the fields are present
+        if (
+            !name.is_string() ||
+            !type.is_string() || type.get<std::string>().empty() ||
+            !constraints.is_array() || constraints.size() > 2 ||
+            !children.is_array() ||
+            element.value().size() != 4)
+        {
+            return false;
+        }
+        // 2. Check if parameter has children but type is not nested
+        if (type != "nested" && children.size() != 0)
+        {
+            return false;
+        }
+        // 3. Validate constraints size and type
+        auto typeString = type.get<std::string>();
+        if (typeString == "int")
+        {
+            if (constraints.size() != 2)
+            {
+                return false;
+            }
+            for (auto &constraint : constraints.items())
+            {
+                if (constraint.value().is_string() && constraint.value().get<std::string>().empty())
+                {
+                    continue;
+                }
+                if (!constraint.value().is_number_integer())
+                {
+                    return false;
+                }
+            }
+        }
+        else if (typeString == "float")
+        {
+            if (constraints.size() != 2)
+            {
+                return false;
+            }
+            for (auto &constraint : constraints.items())
+            {
+                if (constraint.value().is_string() && constraint.value().get<std::string>().empty())
+                {
+                    continue;
+                }
+                if (!constraint.value().is_number_float())
+                {
+                    return false;
+                }
+            }
+        }
+        else if (typeString == "string")
+        {
+            if (constraints.size() != 1)
+            {
+                return false;
+            }
+            for (auto &constraint : constraints.items())
+            {
+                if (!constraint.value().is_string())
+                {
+                    return false;
+                }
+            }
+        }
+        else if (typeString == "nested" || typeString == "bool")
+        {
+            if (constraints.size() != 0)
+            {
+                return false;
+            }
+        }
+        else
+        {
+            return false;
+        }
+        // 4. Check if name is unique
+        auto nameString = name.get<std::string>();
+        if (!nameString.empty())
+        {
+            int size = names.size();
+            names.insert(nameString);
+            if (size == names.size())
+            {
+                return false;
+            }
+        }
+        // 5. Check if children are valid
+        if (!checkJsonChildren(element.value()["children"]))
+        {
+            return false;
+        }
+    }
+    return true;
+}
+
 void IntermediateFormatHandler::loadChildren(json &j, QTreeWidgetItem *parent)
 {
     QString name = QString::fromStdString(j["name"]);
@@ -127,21 +267,6 @@ void IntermediateFormatHandler::loadChildren(json &j, QTreeWidgetItem *parent)
     for (auto &element : j["children"].items())
     {
         this->loadChildren(element.value(), current);
-    }
-}
-
-void IntermediateFormatHandler::loadFile(QString filePath)
-{
-    std::ifstream file(filePath.toStdString());
-    json j;
-    file >> j;
-    file.close();
-    this->treeEditor->reset();
-    this->typeComboBox->setCurrentText(QString::fromStdString(j["type"]));
-    this->classNameEdit->setText(QString::fromStdString(j["class_name"]));
-    for (auto &element : j["parameters"].items())
-    {
-        this->loadChildren(element.value(), this->tree->invisibleRootItem());
     }
 }
 

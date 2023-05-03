@@ -167,7 +167,11 @@ void MainWindow::on_actionLoad_triggered()
     QString filePath = QFileDialog::getOpenFileName(this, "Open File", "", "JSON File (*.json)");
     if (filePath.isEmpty())
         return;
-    this->intermediateFormatHandler->loadFile(filePath);
+    if (!this->intermediateFormatHandler->loadFile(filePath))
+    {
+        QMessageBox::warning(this, "Warning", "Invalid File");
+        return;
+    }
 }
 
 void MainWindow::on_actionInsert_Child_triggered()

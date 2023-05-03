@@ -7,6 +7,8 @@
 #include <QTreeWidgetItem>
 #include <QComboBox>
 #include <QLineEdit>
+#include <set>
+
 using json = nlohmann::ordered_json;
 
 class IntermediateFormatHandler
@@ -15,7 +17,7 @@ public:
     IntermediateFormatHandler(QLineEdit *classNameEdit, QComboBox *typeComboBox, QTreeWidget *tree);
     void saveFile(QString filePath, const RootConfig *allConfig);
     void saveFileAs(QString filePath, const RootConfig *allConfig);
-    void loadFile(QString filePath);
+    bool loadFile(QString filePath);
     ~IntermediateFormatHandler();
 
 private:
@@ -23,6 +25,8 @@ private:
     QLineEdit *classNameEdit;
     QComboBox *typeComboBox;
     TreeEditor *treeEditor;
+    bool checkJsonToLoad(json &j);
+    bool checkJsonChildren(json &j);
     json singleConfigToJson(const Config &config);
     void loadChildren(json &j, QTreeWidgetItem *parent);
     json _rootConfigToJson(const RootConfig *allConfig);

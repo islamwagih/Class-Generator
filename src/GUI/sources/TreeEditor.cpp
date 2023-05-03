@@ -142,23 +142,9 @@ QTreeWidgetItem *TreeEditor::makeRow(QTreeWidgetItem *parent, QString name, QStr
     if (type == QString("int") || type == QString("float"))
     {
         auto lineEdit1 = static_cast<QLineEdit *>(static_cast<QHBoxLayout *>(this->tree->itemWidget(item, 2)->layout())->itemAt(0)->widget());
-        if (this->handleValidator(lineEdit1, constraints.first))
-        {
-            lineEdit1->setText(constraints.first);
-        }
-        else
-        {
-            throw std::invalid_argument("Invalid value for min constraint");
-        }
+        lineEdit1->setText(constraints.first);
         auto lineEdit2 = static_cast<QLineEdit *>(static_cast<QHBoxLayout *>(this->tree->itemWidget(item, 2)->layout())->itemAt(1)->widget());
-        if (this->handleValidator(lineEdit2, constraints.second))
-        {
-            lineEdit2->setText(constraints.second);
-        }
-        else
-        {
-            throw std::invalid_argument("Invalid value for max constraint");
-        }
+        lineEdit2->setText(constraints.second);
     }
     else if (type == QString("string"))
     {
@@ -194,7 +180,8 @@ bool TreeEditor::handleValidator(QLineEdit *edit, QString text)
     }
     else
     {
-        // if text is "-" and the cursor is at second character, do nothing
+        // If text is "-" or "+" and the cursor is at second character. This means that the user is trying to enter a signed number
+        // and the validator will return invalid. However, we want to allow this case
         if ((text == QString("-") || text == QString("+")) && edit->cursorPosition() == 1)
         {
             qDebug() << "special case";
