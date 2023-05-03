@@ -1,9 +1,5 @@
-#include "..\headers\MainWindow.h"
+#include "headers\MainWindow.h"
 #include "ui_mainwindow.h"
-#include <QComboBox>
-#include <QPropertyAnimation>
-#include <QDebug>
-#include <QFileDialog>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::MainWindow)
@@ -111,11 +107,25 @@ void MainWindow::on_resetBtn_clicked()
 
 void MainWindow::on_generateBtn_clicked()
 {
-    treeParser->parseTree();
+    int status = this->treeParser->validateTree(ui->configTree->invisibleRootItem());
+    switch (status)
+    {
+    case TreeParser::VALIDATION_DUPLICATE_NAME:
+        QMessageBox::warning(this, "Warning", "Please use unique parameter names");
+    case TreeParser::VALIDATION_EMPTY_FIELD:
+        QMessageBox::warning(this, "Warning", "Please fill parameter names");
+    case TreeParser::VALIDATION_SUCCESS:
+        this->treeParser->parseTree();
+    }
 }
 
 void MainWindow::on_actionSave_triggered()
 {
+    if (!this->treeParser->checkForDuplicateNames(ui->configTree->invisibleRootItem()))
+    {
+        QMessageBox::warning(this, "Warning", "Please use unique parameter names");
+        return;
+    }
     if (this->saveFilePath.isEmpty())
     {
         if (!getSaveFilePath())
@@ -128,6 +138,11 @@ void MainWindow::on_actionSave_triggered()
 
 void MainWindow::on_actionSave_As_triggered()
 {
+    if (!this->treeParser->checkForDuplicateNames(ui->configTree->invisibleRootItem()))
+    {
+        QMessageBox::warning(this, "Warning", "Please use unique parameter names");
+        return;
+    }
     if (!getSaveFilePath())
         return;
     this->intermediateFormatHandler->saveFile(this->saveFilePath, this->treeParser->parseTree());

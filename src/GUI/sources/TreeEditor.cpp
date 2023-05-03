@@ -1,8 +1,4 @@
-#include "../headers/TreeEditor.h"
-#include <QLineEdit>
-#include <QComboBox>
-#include <QHBoxLayout>
-#include <QHeaderView>
+#include "headers/TreeEditor.h"
 
 TreeEditor *TreeEditor::instance = nullptr;
 
@@ -190,7 +186,7 @@ bool TreeEditor::handleValidator(QLineEdit *edit, QString text)
     // retrieve the qintvalidator or the qdoublevalidator from the validator property of the lineedit
     auto validator = edit->property("validator").value<QValidator *>();
     int temp = 0;
-    if (validator->validate(text, temp) == QValidator::Acceptable)
+    if (text.isEmpty() || validator->validate(text, temp) == QValidator::Acceptable)
     {
         qDebug() << "valid";
         this->displayMessageOnStatusBar(QString(""), 0);

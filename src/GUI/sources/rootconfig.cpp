@@ -1,4 +1,4 @@
-#include "..\headers\rootconfig.h"
+#include "headers\rootconfig.h"
 
 RootConfig *RootConfig::instance = nullptr;
 
