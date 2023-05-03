@@ -25,7 +25,7 @@ HEADERS += \
     headers/TreeEditor.h \
     headers/TreeParser.h \
     headers/rootconfig.h \
-    rootconfig.h
+    headers/rootconfig.h
 
 FORMS += \
     forms/mainwindow.ui
