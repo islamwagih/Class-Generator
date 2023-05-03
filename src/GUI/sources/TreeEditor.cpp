@@ -2,10 +2,11 @@
 
 TreeEditor *TreeEditor::instance = nullptr;
 
-TreeEditor::TreeEditor(QTreeWidget *tree, QStatusBar *statusBar)
+TreeEditor::TreeEditor(QTreeWidget *tree, QStatusBar *statusBar, std::function<void()> saveState)
 {
     this->tree = tree;
     this->statusBar = statusBar;
+    this->saveState = saveState;
     // make all headers in the treewidget stretch to fill the available space and make them resizable by the user
     for (int i = 0; i < tree->columnCount() - 1; ++i)
     {
@@ -17,9 +18,9 @@ TreeEditor::TreeEditor(QTreeWidget *tree, QStatusBar *statusBar)
     tree->header()->setDefaultAlignment(Qt::AlignCenter);
 }
 
-void TreeEditor::init(QTreeWidget *tree, QStatusBar *statusBar)
+void TreeEditor::init(QTreeWidget *tree, QStatusBar *statusBar, std::function<void()> saveState)
 {
-    instance = new TreeEditor(tree, statusBar);
+    instance = new TreeEditor(tree, statusBar, saveState);
 }
 
 TreeEditor *TreeEditor::getInstance()
@@ -35,6 +36,7 @@ void TreeEditor::onComboboxChanged(QTreeWidgetItem *item)
 {
     this->createConstraintLineEdits(item);
     this->setLineEditsValidator(item);
+    this->saveState();
 };
 
 void TreeEditor::createConstraintLineEdits(QTreeWidgetItem *item)
@@ -81,8 +83,12 @@ void TreeEditor::createConstraintLineEdits(QTreeWidgetItem *item)
 #include <QDebug>
 void TreeEditor::setLineEditsValidator(QTreeWidgetItem *item)
 {
-    // set validator of line edit in first column to any strings
-    static_cast<QLineEdit *>(this->tree->itemWidget(item, 0))->setValidator(new QRegExpValidator(QRegExp(".*"), this->tree));
+    // set validator property of line edit in first column to any strings
+    auto nameEdit = static_cast<QLineEdit *>(this->tree->itemWidget(item, 0));
+    nameEdit->setProperty("validator", QVariant::fromValue<QValidator *>(new QRegExpValidator(QRegExp(".*"), this->tree)));
+    QObject::connect(nameEdit, &QLineEdit::textChanged, [this, nameEdit]()
+                     { this->handleValidator(nameEdit, nameEdit->text()); });
+
     // get the value from the combobox
     QString value = static_cast<QComboBox *>(this->tree->itemWidget(item, 1))->currentText();
     auto layout = static_cast<QHBoxLayout *>(this->tree->itemWidget(item, 2)->layout());
@@ -119,24 +125,26 @@ void TreeEditor::setLineEditsValidator(QTreeWidgetItem *item)
     }
 }
 
-QTreeWidgetItem *TreeEditor::makeRow(QTreeWidgetItem *parent)
+QTreeWidgetItem *TreeEditor::makeRow(QTreeWidgetItem *parent, bool blockSignals)
 {
     QTreeWidgetItem *item = new QTreeWidgetItem(parent);
     // insert a row into the tree
     parent->addChild(item);
     this->tree->setItemWidget(item, 0, new QLineEdit(this->tree));
     QComboBox *box = new QComboBox(this->tree);
-    QObject::connect(box, QOverload<int>::of(&QComboBox::currentIndexChanged), [this, item](int index)
-                     { this->onComboboxChanged(item); });
-    this->tree->setItemWidget(item, 1, box);
     box->addItems(this->paramTypes);
+    this->tree->setItemWidget(item, 1, box);
+    this->createConstraintLineEdits(item);
+    this->setLineEditsValidator(item);
+    QObject::connect(box, QOverload<int>::of(&QComboBox::currentIndexChanged), this, [this, item](int index)
+                     { this->onComboboxChanged(item); });
     this->tree->expandItem(item);
     return item;
 }
 
 QTreeWidgetItem *TreeEditor::makeRow(QTreeWidgetItem *parent, QString name, QString type, QPair<QString, QString> constraints)
 {
-    auto item = this->makeRow(parent);
+    auto item = this->makeRow(parent, true);
     static_cast<QLineEdit *>(this->tree->itemWidget(item, 0))->setText(name);
     static_cast<QComboBox *>(this->tree->itemWidget(item, 1))->setCurrentText(type);
     if (type == QString("int") || type == QString("float"))
@@ -175,7 +183,9 @@ bool TreeEditor::handleValidator(QLineEdit *edit, QString text)
     if (text.isEmpty() || validator->validate(text, temp) == QValidator::Acceptable)
     {
         qDebug() << "valid";
+        edit->setProperty("lastValidText", text);
         this->displayMessageOnStatusBar(QString(""), 0);
+        this->saveState();
         return true;
     }
     else
@@ -185,16 +195,18 @@ bool TreeEditor::handleValidator(QLineEdit *edit, QString text)
         if ((text == QString("-") || text == QString("+")) && edit->cursorPosition() == 1)
         {
             qDebug() << "special case";
+            edit->setProperty("lastValidText", text);
             this->displayMessageOnStatusBar(QString(""), 0);
+            this->saveState();
             return true;
         }
         qDebug() << "invalid";
         // get the cursor position
         int pos = edit->cursorPosition();
-        // remove the character behind the cursor
-        // block signals to prevent infinite recursion
+        // block signals to prevent calling this function recursively
         edit->blockSignals(true);
-        edit->setText(text.remove(pos - 1, 1));
+        // get last valid text
+        edit->setText(edit->property("lastValidText").toString());
         edit->blockSignals(false);
         // set the cursor position to the previous position
         edit->setCursorPosition(pos - 1);
@@ -210,4 +222,5 @@ void TreeEditor::displayMessageOnStatusBar(QString message, int timeout)
 
 TreeEditor::~TreeEditor()
 {
+    delete instance;
 }

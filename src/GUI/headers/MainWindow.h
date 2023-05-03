@@ -4,6 +4,7 @@
 #include "headers\TreeEditor.h"
 #include "headers\IntermediateFormatHandler.h"
 #include "headers\TreeParser.h"
+#include "headers\StateHandler.h"
 #include <QMainWindow>
 #include <QPushButton>
 #include <QTreeWidgetItem>
@@ -58,12 +59,21 @@ private slots:
 
     void on_outBrowseBtn_clicked();
 
+    void on_actionUndo_triggered();
+
+    void on_actionRedo_triggered();
+
+    void on_typeComboBox_currentIndexChanged(int index);
+
+    void on_classNameEdit_textEdited(const QString &arg1);
+
 private:
     Ui::MainWindow *ui;
     QString saveFilePath;
     TreeEditor *treeEditor;
     TreeParser *treeParser;
     IntermediateFormatHandler *intermediateFormatHandler;
+    StateHandler *stateHandler;
     bool getSaveFilePath();
 };
 #endif // MAINWINDOW_H

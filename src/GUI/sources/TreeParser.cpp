@@ -1,8 +1,27 @@
 #include "headers/TreeParser.h"
 
+TreeParser *TreeParser::instance = nullptr;
+
 TreeParser::TreeParser(QLineEdit *outDir, QLineEdit *className, QComboBox *fileType, QTreeWidget *tree)
     : outDir(outDir), className(className), fileType(fileType), tree(tree)
 {
+}
+
+void TreeParser::init(QLineEdit *outDir, QLineEdit *className, QComboBox *fileType, QTreeWidget *tree)
+{
+    if (instance == nullptr)
+    {
+        instance = new TreeParser(outDir, className, fileType, tree);
+    }
+}
+
+TreeParser *TreeParser::getInstance()
+{
+    if (instance == nullptr)
+    {
+        throw std::runtime_error("TreeParser instance not initialized");
+    }
+    return instance;
 }
 
 int TreeParser::validateTree(QTreeWidgetItem *item)
