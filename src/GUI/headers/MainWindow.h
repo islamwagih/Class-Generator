@@ -1,12 +1,16 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include "..\headers\TreeEditor.h"
-#include "..\headers\IntermediateFormatHandler.h"
-#include "..\headers\TreeParser.h"
+#include "headers\TreeEditor.h"
+#include "headers\IntermediateFormatHandler.h"
+#include "headers\TreeParser.h"
 #include <QMainWindow>
 #include <QPushButton>
 #include <QTreeWidgetItem>
+#include <QComboBox>
+#include <QPropertyAnimation>
+#include <QDebug>
+#include <QFileDialog>
 
 QT_BEGIN_NAMESPACE
 namespace Ui

@@ -4,6 +4,10 @@
 #include <QTreeWidgetItem>
 #include <QObject>
 #include <QStatusBar>
+#include <QLineEdit>
+#include <QComboBox>
+#include <QHBoxLayout>
+#include <QHeaderView>
 
 class TreeEditor : public QObject
 {

@@ -1,5 +1,5 @@
-#include "..\headers\IntermediateFormatHandler.h"
-#include "..\headers\TreeEditor.h"
+#include "headers\IntermediateFormatHandler.h"
+#include "headers\TreeEditor.h"
 #include <fstream>
 #include <QDebug>
 IntermediateFormatHandler::IntermediateFormatHandler(QLineEdit *classNameEdit, QComboBox *typeComboBox, QTreeWidget *tree)

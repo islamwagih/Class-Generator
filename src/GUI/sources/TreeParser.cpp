@@ -5,6 +5,56 @@ TreeParser::TreeParser(QLineEdit *outDir, QLineEdit *className, QComboBox *fileT
 {
 }
 
+int TreeParser::validateTree(QTreeWidgetItem *item)
+{
+    if (!this->checkForEmptyFields(item))
+        return VALIDATION_EMPTY_FIELD;
+    if (!this->checkForDuplicateNames(item))
+        return VALIDATION_DUPLICATE_NAME;
+    return VALIDATION_SUCCESS;
+}
+
+bool TreeParser::checkForEmptyFields(QTreeWidgetItem *item)
+{
+    for (int i = 0; i < item->childCount(); i++)
+    {
+        QLineEdit *name = qobject_cast<QLineEdit *>(this->tree->itemWidget(item->child(i), NAME_COL_INDX));
+        if (name->text().isEmpty())
+        {
+            return false;
+        }
+        if (!this->checkForEmptyFields(item->child(i)))
+        {
+            return false;
+        }
+    }
+    return true;
+}
+
+bool TreeParser::checkForDuplicateNames(QTreeWidgetItem *item)
+{
+    std::set<std::string> names;
+    // check that names in each level are unique
+    for (int i = 0; i < item->childCount(); i++)
+    {
+        QLineEdit *name = qobject_cast<QLineEdit *>(this->tree->itemWidget(item->child(i), NAME_COL_INDX));
+        if (!name->text().isEmpty())
+        {
+            int size = names.size();
+            names.insert(name->text().toStdString());
+            if (size == names.size())
+            {
+                return false;
+            }
+        }
+        if (!checkForDuplicateNames(item->child(i)))
+        {
+            return false;
+        }
+    }
+    return true;
+}
+
 RootConfig *TreeParser::parseTree()
 {
 

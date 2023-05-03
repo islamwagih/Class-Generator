@@ -91,6 +91,37 @@ QMenu::item:selected {
 	border: 0px;
 	color: #fff;
     selection-background-color: rgb(64, 71, 88);
+}
+
+
+/******* Message Box *******/
+QMessageBox {
+    background-color: rgb(44, 49, 59);
+}
+QMessageBox QFrame {
+    background-color: rgba(0, 0, 0, 0);
+}
+QMessageBox QLabel {
+    color: white;
+	background-color: rgba(0, 0, 0, 0);
+}
+QMessageBox QPushButton {
+    border: 2px solid rgb(52, 59, 72);
+    background-color: rgb(33, 188, 180);
+    color: rgb(223, 223, 223);
+    min-width: 80px;
+	min-height: 35px;
+    border-radius: 15px;
+    font-size: 16px;
+    font-weight: bold;
+}
+QMessageBox QPushButton:hover {
+    background-color: rgb(84, 195, 195);
+    border: 2px solid rgb(43, 50, 61);
+}
+QMessageBox QPushButton:pressed {
+    background-color: rgb(25, 154, 147);
+    border: 2px solid rgb(43, 50, 61);
 }</string>
   </property>
   <widget class="QWidget" name="centralWidget">
@@ -649,7 +680,8 @@ QTreeWidget::branch:open:has-children:!has-siblings,
 QTreeWidget::branch:open:has-children:has-siblings  {
         /*border-image: none;*/
         image: url(:/icons/branch-open.png);
-}</string>
+}
+</string>
          </property>
          <property name="dragDropOverwriteMode">
           <bool>false</bool>
