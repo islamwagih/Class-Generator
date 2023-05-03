@@ -2,6 +2,7 @@
 #include "headers\TreeEditor.h"
 #include <fstream>
 #include <QDebug>
+
 IntermediateFormatHandler::IntermediateFormatHandler(QLineEdit *classNameEdit, QComboBox *typeComboBox, QTreeWidget *tree)
 {
     this->classNameEdit = classNameEdit;
@@ -51,7 +52,11 @@ json IntermediateFormatHandler::singleConfigToJson(const Config &config)
 void IntermediateFormatHandler::_InsertConstraints(json &jsonData, const Config &config)
 {
     jsonData["constraints"] = json::array();
-    for (auto constraint : config.getConstraints())
+    std::vector<std::string> constraints = config.getConstraints();
+    if (constraints.size() == 1 && constraints[0] == "")
+        return;
+
+    for (auto constraint : constraints)
     {
         bool isDouble = false;
         for (auto c : constraint)
