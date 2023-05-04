@@ -16,6 +16,18 @@ private:
 	RootConfig rootConfig;
 	int indentationLvl =0;
 	std::string indentation;
+
+	//classcode : Vector of strings for the complete class
+	std::vector<std::string> classCode;
+	//classcode : Vector of strings for preproccessors
+	std::vector<std::string> directives;
+	//classcode : Vector of strings for the getvar function in the class
+	std::vector<std::string> GetVar;
+	//classcode : Vector of strings for the setvar function in the class
+	std::vector<std::string> SetVar;
+	//classcode : Vector of strings for the init function in the class
+	std::vector<std::string> initCode;
+
 	void appendPreprocessors(std::vector<std::string>&);
 	std::string getOutputClassName();
 	void appendDirectoryMap(std::vector<std::string>&);
@@ -23,10 +35,19 @@ private:
 	void changeIndentationLvl(int);
 	std::vector<std::string> getVariablesNames();
 	std::string capitalizeWord(std::string);
+
+	std::vector<std::string> generatePreprocessorDirectives();
+	std::vector<std::string> generateGetVarFunction();
+	std::vector<std::string> generateSetVarFunction();
+	std::vector<std::string> generateInitFunction();
+	std::string generateTabs(int numTabs);
+
 public:
 	CodeGeneratorINI(const RootConfig& c);
+    
 	std::vector<std::string> generateParserH();
 	std::vector<std::string> generateMyClassH();
+
 };
 
 
