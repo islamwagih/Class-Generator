@@ -13,7 +13,7 @@ class TreeEditor : public QObject
 {
     Q_OBJECT
 public:
-    QTreeWidgetItem *makeRow(QTreeWidgetItem *parent, bool blockSignals = false);
+    QTreeWidgetItem *makeRow(QTreeWidgetItem *parent);
     QTreeWidgetItem *makeRow(QTreeWidgetItem *parent, QString name, QString type, QPair<QString, QString> constraints);
     void removeRow(QTreeWidgetItem *item);
     void onComboboxChanged(QTreeWidgetItem *item);

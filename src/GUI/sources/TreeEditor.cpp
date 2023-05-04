@@ -125,7 +125,7 @@ void TreeEditor::setLineEditsValidator(QTreeWidgetItem *item)
     }
 }
 
-QTreeWidgetItem *TreeEditor::makeRow(QTreeWidgetItem *parent, bool blockSignals)
+QTreeWidgetItem *TreeEditor::makeRow(QTreeWidgetItem *parent)
 {
     QTreeWidgetItem *item = new QTreeWidgetItem(parent);
     // insert a row into the tree
@@ -144,7 +144,7 @@ QTreeWidgetItem *TreeEditor::makeRow(QTreeWidgetItem *parent, bool blockSignals)
 
 QTreeWidgetItem *TreeEditor::makeRow(QTreeWidgetItem *parent, QString name, QString type, QPair<QString, QString> constraints)
 {
-    auto item = this->makeRow(parent, true);
+    auto item = this->makeRow(parent);
     static_cast<QLineEdit *>(this->tree->itemWidget(item, 0))->setText(name);
     static_cast<QComboBox *>(this->tree->itemWidget(item, 1))->setCurrentText(type);
     if (type == QString("int") || type == QString("float"))
