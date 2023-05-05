@@ -52,21 +52,32 @@ std::vector<std::string> CodeGeneratorINI::generateParserH()
 	addLine("",file);
 
 	//Write the function: getFromFile()
+	//TODO change path to be vector of enum values
 	addLine("template <typename T>",file);
 	addLine("T getFromFile(std::vector<std::string> path)",file);
 	addLine("{",file);
 	changeIndentationLvl(1);
-	//TODO add the implementation for getFromFile
+	addLine("std::string path = filePath;",file);
+	addLine("boost::property_tree::ptree pt;",file);
+	addLine("boost::property_tree::ini_parser::read_ini(path, pt);",file);
+	addLine("T value = pt.get<T>(path);",file);
+	addLine("return value;",file);
 	changeIndentationLvl(-1);
 	addLine("}",file);
 
 
 	//Write the function: setInFile()
+	//TODO change path to be vector of enum values
 	addLine("template <typename T>",file);
 	addLine("bool setInFile(std::vector<std::string> path, T value)",file);
 	addLine("{",file);
 	changeIndentationLvl(1);
-	//TODO add the implementation for setInFile
+	addLine("if(applyConstrains(path, value) == false)  return false;",file);
+	addLine("std::string path = filePath;",file);
+	addLine("boost::property_tree::ptree pt;",file);
+	addLine("boost::property_tree::ini_parser::read_ini(path, pt);",file);
+	addLine("pt.put(path, value);",file);
+	addLine("return getFromFile(path) == value;",file);  //Validate be re-reading the value
 	changeIndentationLvl(-1);
 	addLine("}",file);
 
@@ -97,6 +108,9 @@ void CodeGeneratorINI::appendPreprocessors(std::vector<std::string>& file)
 	addLine("#include <map>",file);
 	addLine("#include <vector>",file);
 	addLine("#include <vector>",file);
+	//boost library headers
+	addLine("#include <boost/property_tree/ptree.hpp>",file);
+	addLine("#include <boost/property_tree/ini_parser.hpp>",file);
 //	file.push_back("#include \"parser_lib.hpp\""); //Removed for now
 	addLine("",file);
 }
