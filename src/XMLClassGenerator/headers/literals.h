@@ -53,9 +53,19 @@ std::string CONSTRUCTOR = R"(
 
 std::string GET_FROM_FILE = R"(
     template <typename T>
-    T getFromFile(std::vector<std::string> path)
+    T getFromFile(std::vector<std::string>& path)
     {
-        {IMPLEMENTATION}
+        pugi::xml_document doc = this->getXMLDoc();
+        pugi::xml_node node = doc.child("root");
+        for (const auto& tag : path)
+        {
+            node = node.child(tag.c_str());
+        }
+
+        std::stringstream ss(node.child_value());
+        T value;
+        ss >> value;
+        return value;
     }
 )";
 
@@ -68,9 +78,17 @@ std::string IS_LEAF = R"(
 
 std::string SET_IN_FILE = R"(
     template <typename T>
-    bool setInFile(std::vector<std::string> path, T value)
+    bool setInFile(std::vector<std::string>& path, T value)
     {
-        {IMPLEMENTATION}
+        pugi::xml_document doc = this->getXMLDoc();
+        pugi::xml_node node = doc.child("root");
+
+        for (const auto& tag : path)
+        {
+            node = node.child(tag.c_str());
+        }
+        node.text().set(value);
+        return doc.save_file(file_path.c_str());
     }
 )";
 
