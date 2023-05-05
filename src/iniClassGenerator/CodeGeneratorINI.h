@@ -34,8 +34,10 @@ private:
 	void addLine(const std::string&,std::vector<std::string>&);
 	void changeIndentationLvl(int);
 	std::vector<std::string> getVariablesNames();
+	std::vector<std::string> getConstraintsINI();
+	std::vector<std::string> generateMapOfConstraints();
 	std::string capitalizeWord(std::string);
-
+	std::string getIniSectionName(std::string file_path);
 	std::vector<std::string> generatePreprocessorDirectives();
 	std::vector<std::string> generateGetVarFunction();
 	std::vector<std::string> generateSetVarFunction();
