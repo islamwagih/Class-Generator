@@ -1,6 +1,6 @@
 # Compiler settings
 CXX=g++
-CXXFLAGS=-std=c++11 -Wall -Wextra
+CXXFLAGS=-std=c++11 -Wall -Wextra -g
 
 # Directories
 SRC_DIR=sources
@@ -27,4 +27,6 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
 	$(CXX) $(CXXFLAGS) $(INCLUDES) -c $< -o $@
 
 clean:
-	rm -f $(OBJ_DIR)/*.o $(OUTPUT)
+	del $(OBJ_DIR)\*.o
+
+fresh: clean all
