@@ -4,3 +4,4 @@ ClassGenerator.pro.*
 *.autosave
 *.exe
 build-ClassGenerator-*
+obj/
