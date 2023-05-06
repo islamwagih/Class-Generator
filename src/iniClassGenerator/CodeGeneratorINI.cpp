@@ -16,7 +16,7 @@ std::vector<std::string> CodeGeneratorINI::generateParserH()
 
 	//Add class name
 	std::string parserClassName = "Parser";
-	addLine("class" + parserClassName,file);
+	addLine("class " + parserClassName,file);
 	addLine("{",file);
 
 	//Add private section
@@ -45,7 +45,7 @@ std::vector<std::string> CodeGeneratorINI::generateParserH()
 	//init class variables
 	for(const auto& variableName: variables)
 	{
-		addLine(capitalizeWord(variableName) + " = " + variableName+";",file);
+		addLine(capitalizeWord(variableName) + " = \"" + variableName+"\";",file);
 	}
 	changeIndentationLvl(-1);
 	addLine("}",file);
@@ -57,9 +57,8 @@ std::vector<std::string> CodeGeneratorINI::generateParserH()
 	addLine("T getFromFile(std::vector<std::string> path)",file);
 	addLine("{",file);
 	changeIndentationLvl(1);
-	addLine("std::string path = filePath;",file);
 	addLine("boost::property_tree::ptree pt;",file);
-	addLine("boost::property_tree::ini_parser::read_ini(path, pt);",file);
+	addLine("boost::property_tree::ini_parser::read_ini(filePath, pt);",file);
 	addLine("T value = pt.get<T>(path);",file);
 	addLine("return value;",file);
 	changeIndentationLvl(-1);
@@ -73,11 +72,10 @@ std::vector<std::string> CodeGeneratorINI::generateParserH()
 	addLine("{",file);
 	changeIndentationLvl(1);
 	addLine("if(applyConstrains(path, value) == false)  return false;",file);
-	addLine("std::string path = filePath;",file);
 	addLine("boost::property_tree::ptree pt;",file);
-	addLine("boost::property_tree::ini_parser::read_ini(path, pt);",file);
+	addLine("boost::property_tree::ini_parser::read_ini(filePath, pt);",file);
 	addLine("pt.put(path, value);",file);
-	addLine("return getFromFile(path) == value;",file);  //Validate be re-reading the value
+	addLine("return (getFromFile<T>(path) == value);",file);  //Validate be re-reading the value
 	changeIndentationLvl(-1);
 	addLine("}",file);
 
@@ -88,6 +86,7 @@ std::vector<std::string> CodeGeneratorINI::generateParserH()
 	addLine("{",file);
 	changeIndentationLvl(1);
 	//TODO add the implementation for applyConstraints
+	addLine("return true;",file);
 	changeIndentationLvl(-1);
 	addLine("}",file);
 
