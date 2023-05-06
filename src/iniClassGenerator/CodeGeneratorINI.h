@@ -24,7 +24,7 @@ private:
 	std::vector<std::string> SetVar;
 	std::vector<std::string> initCode;
 
-	void appendPreprocessors(std::vector<std::string>&);
+	void appendParserPreprocessors(std::vector<std::string> &file);
 	std::string getOutputClassName();
 	void appendDirectoryMap(std::vector<std::string>&);
 	void addLine(const std::string&);

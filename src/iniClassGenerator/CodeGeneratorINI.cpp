@@ -11,7 +11,7 @@ std::vector<std::string> CodeGeneratorINI::generateParserH()
 {
 	file.clear();
 	//Add preprocessing statements
-	appendPreprocessors(file);
+	appendParserPreprocessors(file);
 
 	//Add class name
 	std::string parserClassName = "Parser";
@@ -26,7 +26,7 @@ std::vector<std::string> CodeGeneratorINI::generateParserH()
 	changeIndentationLvl(-1);
 
 	//Add public section
-	addLine("private:");
+	addLine("public:");
 	changeIndentationLvl(1);
 	auto variables =  getVariablesNames();
 
@@ -98,7 +98,7 @@ std::vector<std::string> CodeGeneratorINI::generateParserH()
 	return file;
 }
 
-void CodeGeneratorINI::appendPreprocessors(std::vector<std::string>& file)
+void CodeGeneratorINI::appendParserPreprocessors(std::vector<std::string>& file)
 {
 	addLine("#ifndef PARSER_HPP");
 	addLine("#define PARSER_HPP");
@@ -177,7 +177,7 @@ std::vector<std::string> CodeGeneratorINI::generatePreprocessorDirectives()
 	Pre.push_back("#include <vector>");
 	Pre.push_back("#include <string>");
 	Pre.push_back("#include <stdexcept>");
-	Pre.push_back("#include <parser.cpp>");
+	Pre.push_back("#include \"parser.h\"");
 	Pre.push_back(" ");
 
 	return Pre;

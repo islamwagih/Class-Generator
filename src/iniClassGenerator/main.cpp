@@ -45,12 +45,12 @@ int main()
 
 	//Initialise the generator and get output
 	CodeGeneratorINI iniGenerator(rootConfig);
-	auto lines = iniGenerator.generateParserH();
-	auto lines2 = iniGenerator.generateMyClassH();
+	auto parser_h = iniGenerator.generateParserH();
+	auto myClass_h = iniGenerator.generateMyClassH();
 
 	//Write output to file
-	FileWriter::writeFile("../OutParser.h",lines);
-	FileWriter::writeFile("../OutMyClass.h",lines2);
+	FileWriter::writeFile("../parser.h", parser_h);
+	FileWriter::writeFile("../myClass.h", myClass_h);
 
 	return 0;
 }
