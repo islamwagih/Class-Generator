@@ -1,4 +1,4 @@
-#include "../headers/ClassGenerator.h"
+#include "XMLClassGenerator.h"
 #include <iostream>
 
 XMLClassGenerator::XMLClassGenerator(const std::vector<Config> &configs) : ClassGenerator(configs)
@@ -35,12 +35,12 @@ std::string XMLClassGenerator::generateGetXmlDoc()
     return xml_literals::GET_XML_DOC;
 }
 
-std::string ClassGenerator::generateGetFromFile() override
+std::string JSONClassGenerator::generateGetFromFile() override
 {
     return xml_literals::GET_FROM_FILE;
 }
 
-std::string ClassGenerator::generateSetInFile() override
+std::string JSONClassGenerator::generateSetInFile() override
 {
     return xml_literals::SET_IN_FILE;
 }
