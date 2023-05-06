@@ -6,30 +6,6 @@ ClassGenerator::ClassGenerator(const std::vector<Config> &configs)
     this->configs = configs;
 }
 
-std::string ClassGenerator::generateClass()
-{
-    std::string classString = "";
-    classString += generateIncludes("PARSER", "CPP", "xml.hpp");
-    classString += generateClassName("Parser");
-
-    classString += generateVisibility("private");
-    classString += generateConstraintsMap(configs);
-    classString += generateFilePath("filePath");
-    classString += generateGetXmlDoc();
-    classString += generateConcatPath();
-
-    classString += generateVisibility("public");
-    classString += generateStringLiterals(configs);
-    classString += generateConsturctor(configs, "Parser");
-    classString += generateGetFromFile();
-    classString += generateIsLeaf();
-    classString += generateSetInFile();
-    classString += generateApplyConstraints();
-    classString += generateEnd("PARSER", "CPP");
-
-    return classString;
-}
-
 std::string ClassGenerator::generateIncludes(const std::string &name, const std::string &extension, const std::string &parserLib)
 {
     return literals::INCLUDES.format({{"{NAME}", name}, {"{EXTENSION}", extension}, {"{PARSER_LIB}", parserLib}});
@@ -104,10 +80,6 @@ std::string ClassGenerator::generateFilePath(const std::string &filePath)
     return literals::FILE_PATH.format({{"{FILE_PATH}", filePath}});
 }
 
-std::string ClassGenerator::generateGetXmlDoc()
-{
-    return literals::GET_XML_DOC;
-}
 
 std::string ClassGenerator::generateConcatPath()
 {
@@ -173,20 +145,12 @@ std::string ClassGenerator::generateOneInitializeLiteral(std::string name)
     return literals::ONE_INITIALIZE_LITERAL.format({{"{NAME_UPPER}", upper}, {"{NAME}", name}});
 }
 
-std::string ClassGenerator::generateGetFromFile()
-{
-    return literals::GET_FROM_FILE;
-}
 
 std::string ClassGenerator::generateIsLeaf()
 {
     return literals::IS_LEAF;
 }
 
-std::string ClassGenerator::generateSetInFile()
-{
-    return literals::SET_IN_FILE;
-}
 
 std::string ClassGenerator::generateApplyConstraints()
 {
@@ -198,28 +162,12 @@ std::string ClassGenerator::generateEnd(const std::string &className, const std:
     return literals::END.format({{"{CLASS_NAME}", className}, {"{EXTENSION}", extension}});
 }
 
-#include <fstream>
-int main()
+std::string ClassGenerator::toUpper(std::string str)
 {
-    std::vector<Config> configs;
-    Config x("x", "int", {"-3", "3"}, {});
-    Config y("y", "bool", {""}, {});
-    Config width("width", "string", {"[a-z]+[0-9]+"}, {});
-    Config height("height", "int", {"0", "1000"}, {});
-    Config rect("rect", "nested", {""}, {x, y, width, height});
-    ClassGenerator cg({rect});
-    // open file temp.cpp
-    std::ofstream file("temp.cpp");
-    // write cg.generateClass() to file
-    if (file.is_open())
-    {
-        file << cg.generateClass();
-        file.close();
+   std::string upper = "";  
+    for (int x=0; x < str.size(); x++){
+
+        upper += toupper(str[x]);
     }
-    else
-    {
-        std::cerr << "Unable to open file";
-    }
-    // close file
-    // std::cout << cg.generateClass({}) << std::endl;
+    return upper;
 }
