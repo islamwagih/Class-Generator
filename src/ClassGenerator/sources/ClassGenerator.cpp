@@ -1,9 +1,9 @@
 #include "../headers/ClassGenerator.h"
 #include <iostream>
 
-ClassGenerator::ClassGenerator(const std::vector<Config> &configs)
+ClassGenerator::ClassGenerator(const RootConfig &root_config)
 {
-    this->configs = configs;
+    this->rootConfig = root_config;
 }
 
 std::string ClassGenerator::generateIncludes(const std::string &name, const std::string &extension, const std::string &parserLib)
@@ -21,10 +21,10 @@ std::string ClassGenerator::generateVisibility(const std::string &visibility)
     return literals::VISIBILITY.format({{"{VISIBILITY}", visibility}});
 }
 
-std::string ClassGenerator::generateConstraintsMap(const std::vector<Config> &configs)
+std::string ClassGenerator::generateConstraintsMap()
 {
     std::string constraints = "";
-    std::vector<std::vector<std::string>> leafs = getAllLeafs(configs);
+    std::vector<std::vector<std::string>> leafs = getAllLeafs(this->rootConfig.getConfigs());
     for (auto config : leafs)
     {
         constraints += generateOneConstraint(config[0], config[1], config[2]);
@@ -32,9 +32,10 @@ std::string ClassGenerator::generateConstraintsMap(const std::vector<Config> &co
     return literals::CONSTRAINTS_MAP.format({{"{CONSTRAINTS}", constraints}});
 }
 
-std::vector<std::vector<std::string>> ClassGenerator::getAllLeafs(const std::vector<Config> &configs)
+std::vector<std::vector<std::string>> ClassGenerator::getAllLeafs()
 {
     std::vector<std::vector<std::string>> leafs;
+    std::vector<Config> configs = this->rootConfig.getConfigs();
     for (auto config : configs)
     {
         if (config.getChildren().size() == 0)
@@ -80,15 +81,15 @@ std::string ClassGenerator::generateFilePath(const std::string &filePath)
     return literals::FILE_PATH.format({{"{FILE_PATH}", filePath}});
 }
 
-
 std::string ClassGenerator::generateConcatPath()
 {
     return literals::CONCAT_PATH;
 }
 
-std::string ClassGenerator::generateStringLiterals(const std::vector<Config> &configs)
+std::string ClassGenerator::generateStringLiterals()
 {
     std::string stringLiterals = "";
+    std::vector<Config> configs = this->rootConfig.getConfigs();
     std::unordered_set<std::string> names = getAllNames(configs);
     for (auto name : names)
     {
@@ -97,9 +98,10 @@ std::string ClassGenerator::generateStringLiterals(const std::vector<Config> &co
     return literals::STRING_LITERALS.format({{"{STRING_LITERALS}", stringLiterals}});
 }
 
-std::unordered_set<std::string> ClassGenerator::getAllNames(const std::vector<Config> &configs)
+std::unordered_set<std::string> ClassGenerator::getAllNames()
 {
     std::unordered_set<std::string> names;
+    std::vector<Config> configs = this->rootConfig.getConfigs();
     for (auto config : configs)
     {
         if (config.getChildren().size() == 0)
@@ -122,14 +124,16 @@ std::string ClassGenerator::generateOneStringLiteral(std::string name)
     return literals::ONE_STRING_LITERAL.format({{"{NAME}", name}});
 }
 
-std::string ClassGenerator::generateConsturctor(const std::vector<Config> &configs, const std::string &className)
+std::string ClassGenerator::generateConsturctor(const std::string &className)
 {
+    std::vector<Config> configs = this->rootConfig.getConfigs();
     return literals::CONSTRUCTOR.format({{"{CLASS_NAME}", className}, {"{INITIALIZE_LITERALS}", generateInitializeLiterals(configs)}});
 }
 
-std::string ClassGenerator::generateInitializeLiterals(const std::vector<Config> &configs)
+std::string ClassGenerator::generateInitializeLiterals()
 {
     std::string initializeLiterals = "";
+    std::vector<Config> configs = this->rootConfig.getConfigs();
     std::unordered_set<std::string> names = getAllNames(configs);
     for (auto name : names)
     {
@@ -145,12 +149,10 @@ std::string ClassGenerator::generateOneInitializeLiteral(std::string name)
     return literals::ONE_INITIALIZE_LITERAL.format({{"{NAME_UPPER}", upper}, {"{NAME}", name}});
 }
 
-
 std::string ClassGenerator::generateIsLeaf()
 {
     return literals::IS_LEAF;
 }
-
 
 std::string ClassGenerator::generateApplyConstraints()
 {
@@ -164,8 +166,9 @@ std::string ClassGenerator::generateEnd(const std::string &className, const std:
 
 std::string ClassGenerator::toUpper(std::string str)
 {
-   std::string upper = "";  
-    for (int x=0; x < str.size(); x++){
+    std::string upper = "";
+    for (int x = 0; x < str.size(); x++)
+    {
 
         upper += toupper(str[x]);
     }
