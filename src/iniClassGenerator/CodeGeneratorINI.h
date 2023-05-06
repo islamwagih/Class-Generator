@@ -16,10 +16,11 @@ private:
 	RootConfig rootConfig;
 	int indentationLvl =0;
 	std::string indentation;
+	std::vector<std::string> file;
 	void appendPreprocessors(std::vector<std::string>&);
 	std::string getOutputClassName();
 	void appendDirectoryMap(std::vector<std::string>&);
-	void addLine(const std::string&,std::vector<std::string>&);
+	void addLine(const std::string&);
 	void changeIndentationLvl(int);
 	std::vector<std::string> getVariablesNames();
 	std::string capitalizeWord(std::string);

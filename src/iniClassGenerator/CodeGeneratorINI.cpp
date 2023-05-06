@@ -9,109 +9,108 @@ CodeGeneratorINI::CodeGeneratorINI(RootConfig* rootConfig) : rootConfig(*rootCon
 
 std::vector<std::string> CodeGeneratorINI::generateParserH()
 {
-	std::vector<std::string> file;
-
+	file.clear();
 	//Add preprocessing statements
 	appendPreprocessors(file);
 
 	//Add class name
 	std::string parserClassName = "Parser";
-	addLine("class " + parserClassName,file);
-	addLine("{",file);
+	addLine("class " + parserClassName);
+	addLine("{");
 
 	//Add private section
-	addLine("private:",file);
+	addLine("private:");
 	changeIndentationLvl(1);
 	appendDirectoryMap(file);
-	addLine("std::string filePath;",file);
+	addLine("std::string filePath;");
 	changeIndentationLvl(-1);
 
 	//Add public section
-	addLine("private:",file);
+	addLine("private:");
 	changeIndentationLvl(1);
 	auto variables =  getVariablesNames();
 
 	//Add public variables section
 	for(const auto& variableName: variables)
 	{
-		addLine("std::string " + capitalizeWord(variableName) + ";",file);
+		addLine("std::string " + capitalizeWord(variableName) + ";");
 	}
 
 	//Add constructor
-	addLine(parserClassName +" (std::string filePath)",file);
-	addLine("{",file);
+	addLine(parserClassName +" (std::string filePath)");
+	addLine("{");
 	changeIndentationLvl(1);
-	addLine("this->filePath = filePath;",file);
+	addLine("this->filePath = filePath;");
 	//init class variables
 	for(const auto& variableName: variables)
 	{
-		addLine(capitalizeWord(variableName) + " = \"" + variableName+"\";",file);
+		addLine(capitalizeWord(variableName) + " = \"" + variableName+"\";");
 	}
 	changeIndentationLvl(-1);
-	addLine("}",file);
-	addLine("",file);
+	addLine("}");
+	addLine("");
 
 	//Write the function: getFromFile()
 	//TODO change path to be vector of enum values
-	addLine("template <typename T>",file);
-	addLine("T getFromFile(std::vector<std::string> path)",file);
-	addLine("{",file);
+	addLine("template <typename T>");
+	addLine("T getFromFile(std::vector<std::string> path)");
+	addLine("{");
 	changeIndentationLvl(1);
-	addLine("boost::property_tree::ptree pt;",file);
-	addLine("boost::property_tree::ini_parser::read_ini(filePath, pt);",file);
-	addLine("T value = pt.get<T>(path);",file);
-	addLine("return value;",file);
+	addLine("boost::property_tree::ptree pt;");
+	addLine("boost::property_tree::ini_parser::read_ini(filePath, pt);");
+	addLine("T value = pt.get<T>(path);");
+	addLine("return value;");
 	changeIndentationLvl(-1);
-	addLine("}",file);
+	addLine("}");
 
 
 	//Write the function: setInFile()
 	//TODO change path to be vector of enum values
-	addLine("template <typename T>",file);
-	addLine("bool setInFile(std::vector<std::string> path, T value)",file);
-	addLine("{",file);
+	addLine("template <typename T>");
+	addLine("bool setInFile(std::vector<std::string> path, T value)");
+	addLine("{");
 	changeIndentationLvl(1);
-	addLine("if(applyConstrains(path, value) == false)  return false;",file);
-	addLine("boost::property_tree::ptree pt;",file);
-	addLine("boost::property_tree::ini_parser::read_ini(filePath, pt);",file);
-	addLine("pt.put(path, value);",file);
-	addLine("return (getFromFile<T>(path) == value);",file);  //Validate be re-reading the value
+	addLine("if(applyConstrains(path, value) == false)  return false;");
+	addLine("boost::property_tree::ptree pt;");
+	addLine("boost::property_tree::ini_parser::read_ini(filePath, pt);");
+	addLine("pt.put(path, value);");
+	addLine("return (getFromFile<T>(path) == value);");  //Validate be re-reading the value
 	changeIndentationLvl(-1);
-	addLine("}",file);
+	addLine("}");
 
 
 	//Write the function: applyConstraints()
-	addLine("template <typename T>",file);
-	addLine("bool applyConstraints(std::vector<std::string> path, T value)",file);
-	addLine("{",file);
+	addLine("template <typename T>");
+	addLine("bool applyConstraints(std::vector<std::string> path, T value)");
+	addLine("{");
 	changeIndentationLvl(1);
 	//TODO add the implementation for applyConstraints
-	addLine("return true;",file);
+	addLine("return true;");
 	changeIndentationLvl(-1);
-	addLine("}",file);
+	addLine("}");
 
 
 	//Close the class
 	changeIndentationLvl(-1);
-	addLine("};",file);
-	addLine("",file);
-	addLine("#endif",file);
+	addLine("};");
+	addLine("");
+	addLine("#endif");
 	return file;
 }
 
 void CodeGeneratorINI::appendPreprocessors(std::vector<std::string>& file)
 {
-	addLine("#ifndef PARSER_HPP",file);
-	addLine("#define PARSER_HPP",file);
-	addLine("",file);
-	addLine("#include <map>",file);
-	addLine("#include <vector>",file);
-	addLine("#include <vector>",file);
+	addLine("#ifndef PARSER_HPP");
+	addLine("#define PARSER_HPP");
+	addLine("");
+	addLine("#include <map>");
+	addLine("#include <vector>");
+	addLine("#include <vector>");
 	//boost library headers
-	addLine("#include <boost/property_tree/ptree.hpp>",file);
-	addLine("#include <boost/property_tree/ini_parser.hpp>",file);
+	addLine("#include <boost/property_tree/ptree.hpp>");
+	addLine("#include <boost/property_tree/ini_parser.hpp>");
 //	file.push_back("#include \"parser_lib.hpp\""); //Removed for now
-	addLine("",file);
+	addLine("");
 }
 
 std::string CodeGeneratorINI::getOutputClassName()
@@ -130,7 +129,7 @@ void CodeGeneratorINI::changeIndentationLvl(int change)
 	      indentation+=(char)9; //(char)9 is the ascii for the tab character
 }
 
-void CodeGeneratorINI::addLine(const std::string& line, std::vector<std::string>& file)
+void CodeGeneratorINI::addLine(const std::string& line)
 {
 	file.push_back(indentation+line);
 }
