@@ -156,16 +156,16 @@ std::string CodeGeneratorINI::capitalizeWord(std::string word)
 	return word;
 }
 
-std::string CodeGeneratorINI::getIniSectionName(std::string file_path)
-{
-	std::ifstream file(file_path);
-	std::string line;
-	while (std::getline(file, line)) {
-		if (line[0] == '[' && line[line.length() - 1] == ']') {
-			return line.substr(1, line.length() - 2);
-		}
-	}
-}
+//std::string CodeGeneratorINI::getIniSectionName(std::string file_path)
+//{
+//	std::ifstream file(file_path);
+//	std::string line;
+//	while (std::getline(file, line)) {
+//		if (line[0] == '[' && line[line.length() - 1] == ']') {
+//			return line.substr(1, line.length() - 2);
+//		}
+//	}
+//}
 
 
 std::vector<std::string> CodeGeneratorINI::generatePreprocessorDirectives()
