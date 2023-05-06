@@ -2,7 +2,6 @@
 #define CONFIG_H
 #include <string>
 #include <vector>
-#include <QDebug>
 
 class Config
 {
@@ -20,5 +19,4 @@ public:
     std::vector<Config> getChildren() const;
     ~Config();
 };
-QDebug operator<<(QDebug debug, const Config &config);
 #endif // CONFIG_H
