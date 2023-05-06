@@ -136,26 +136,6 @@ std::vector<std::string> CodeGeneratorINI::getVariablesNames()
 	return variables;
 }
 
-std::vector<std::string> CodeGeneratorINI::getConstraintsINI()
-{
-	std::vector<std::string> constraints;
-	for (const auto& var : rootConfig.getConfigs)
-		constraints.push_back(var.getConstraints());
-	return constraints;
-}
-
-std::vector<std::string> CodeGeneratorINI::generateMapOfConstraints()
-{
-	std::vector<std::string> MapCode;
-	MapCode.push_back(generateTabs(1) + "std::map<std::string, std::vector<std::string>> constraints = {");
-	for (const auto& var : getConstraintsINI())
-	{
-		MapCode.push_back(generateTabs(2) +"{"+ "\"" + getIniSectionName("example.ini")+"."+ getVariablesNames()[i]+ "\"" +"{" + "}" + "}");
-	}
-	MapCode.push_back(generateTabs(1) + "};");
-	return MapCode;
-}
-
 std::string CodeGeneratorINI::capitalizeWord(std::string word)
 {
 	for (char & i : word)
@@ -166,15 +146,10 @@ std::string CodeGeneratorINI::capitalizeWord(std::string word)
 
 std::string CodeGeneratorINI::getIniSectionName(std::string file_path)
 {
-	// Create an ifstream object to read the INI file
 	std::ifstream file(file_path);
-	// Create a string to hold the current line being read
 	std::string line;
-	// Loop through the file until the first section is found
 	while (std::getline(file, line)) {
-		// Check if the line starts with '[' and ends with ']'
 		if (line[0] == '[' && line[line.length() - 1] == ']') {
-			// Return the section name without the brackets
 			return line.substr(1, line.length() - 2);
 		}
 	}
@@ -242,6 +217,42 @@ std::string CodeGeneratorINI::generateTabs(int numTabs)
 		tabs += "\t";
 	}
 	return tabs;
+}
+
+std::string CodeGeneratorINI::iniSetValue()
+{
+	std::string iniSetInFile = R"(bool setInFile(std::vector<std::string>& path, T value)
+{
+    mINI::INIFile file(filePath);
+    mINI::INIStructure ini;
+    file.read(ini);
+
+    std::string section_name = path[0];
+    std::string key_name = path[1];
+    ini[section_name][key_name] = value;
+
+    if (!file.write(ini)) {
+        return false;
+    }
+    return true;
+})";
+	return iniSetInFile;
+}
+
+std::string CodeGeneratorINI::iniGetValue()
+{
+	std::string getVarIni = R"(template<typename T>
+T getFromFile(const std::vector<std::string>& path) {
+    mINI::INIFile file(filePath);
+    mINI::INIStructure ini;
+    file.read(ini);
+
+    std::string section_name = path[0];
+    std::string key_name = path[1];
+
+    return ini[section_name][key_name];
+})";
+	return getVarIni;
 }
 
 
