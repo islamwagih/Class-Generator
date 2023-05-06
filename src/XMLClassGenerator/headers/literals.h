@@ -60,6 +60,9 @@ std::string GET_FROM_FILE = R"(
         for (const auto& tag : path)
         {
             node = node.child(tag.c_str());
+            if(!node){
+                throw std::runtime_error("XML Tag not found");
+            }
         }
 
         std::stringstream ss(node.child_value());
@@ -86,6 +89,9 @@ std::string SET_IN_FILE = R"(
         for (const auto& tag : path)
         {
             node = node.child(tag.c_str());
+            if(!node){
+                throw std::runtime_error("XML Tag not found");
+            }
         }
         node.text().set(value);
         return doc.save_file(file_path.c_str());
