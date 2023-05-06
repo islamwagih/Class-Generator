@@ -24,7 +24,7 @@ private:
 	std::vector<std::string> getVariablesNames();
 	std::string capitalizeWord(std::string);
 public:
-	CodeGeneratorINI(const RootConfig& c);
+	CodeGeneratorINI(RootConfig*);
 	std::vector<std::string> generateParserH();
 	std::vector<std::string> generateMyClassH();
 };

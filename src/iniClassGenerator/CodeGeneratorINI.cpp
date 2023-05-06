@@ -4,7 +4,7 @@
 
 #include "CodeGeneratorINI.h"
 
-CodeGeneratorINI::CodeGeneratorINI(const RootConfig& rootConfig) : rootConfig(rootConfig)
+CodeGeneratorINI::CodeGeneratorINI(RootConfig* rootConfig) : rootConfig(*rootConfig)
 {}
 
 std::vector<std::string> CodeGeneratorINI::generateParserH()
