@@ -46,8 +46,21 @@ std::string KEY = R"(
     std::string {KEY};
 )";
 
+// this in private section of XMLParser
+std::string privateSection = R"(
+    std::string file_path;
+    pugi::xml_document getXMLDoc(){
+
+        pugi::xml_document doc;
+        if(!doc.load_file(file_path.c_str())){
+            throw std::runtime_error("XML File not found");
+        }
+        return doc;
+    }
+)";
+
 std::string CONSTRUCTOR = R"(
-    {CLASS_NAME}(std::string filePath)
+    {CLASS_NAME}(std::string filePath):file_path(std::move(filePath))
     {
         this->filePath = filePath;
         {KEYS}
