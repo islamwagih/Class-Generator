@@ -31,7 +31,7 @@ std::string XMLClassGenerator::generateClass(std::string className) override
     return classString;
 }
 
-std::string JSONClassGenerator::generateGetXmlDoc()
+std::string JSONClassGenerator::generateGetJSONValue()
 {
     return json_literals::GET_JSON_VALUE;
 }

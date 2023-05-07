@@ -8,7 +8,6 @@ class JSONClassGenerator :: public ClassGenerator
 {
 private:
     std::string generateGetJSONValue();
-    std::string generateGETJSONObj();
 
 
 public:

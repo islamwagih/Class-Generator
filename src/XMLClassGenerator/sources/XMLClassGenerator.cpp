@@ -35,12 +35,12 @@ std::string XMLClassGenerator::generateGetXmlDoc()
     return xml_literals::GET_XML_DOC;
 }
 
-std::string JSONClassGenerator::generateGetFromFile() override
+std::string XMLClassGenerator::generateGetFromFile() override
 {
     return xml_literals::GET_FROM_FILE;
 }
 
-std::string JSONClassGenerator::generateSetInFile() override
+std::string XMLClassGenerator::generateSetInFile() override
 {
     return xml_literals::SET_IN_FILE;
 }
