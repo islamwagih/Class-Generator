@@ -10,7 +10,7 @@ namespace json_literals
         R"(    nlohmann::json json_object;
 )";
 
-    FormattableString GET_JSON_VALU = R"(
+    FormattableString GET_JSON_VALUE = R"(
         nlohmann::json get_json_value(const nlohmann::json& json_object, const std::vector<std::string>& keys) {
         if (keys.size() == 0) {
             // If there are no more keys to access, return the JSON object

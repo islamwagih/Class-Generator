@@ -1,26 +1,24 @@
-#include "JSONClassGenerator.h"
+#include "../headers/JSONClassGenerator.h"
 
 JSONClassGenerator::JSONClassGenerator(const RootConfig &rootConfig) : ClassGenerator(rootConfig)
 {
 }
 
-std::string XMLClassGenerator::generateClass(std::string className) override
+std::string JSONClassGenerator::generateClass(std::string className)
 {
-    std::string name_upperCase = ClassGenerator::toUpper(className);
-    std::vector<Config> configs = this->rootConfig.getConfigs();
+    std::string name_upperCase = toUpper(className);
     std::string classString = "";
     classString += generateIncludes(name_upperCase, "CPP", "json.hpp");
     classString += generateClassName(className);
 
     classString += generateVisibility("private");
-    classString += generateConstraintsMap(configs);
-    classString += generateGETJSONObj();
+    classString += generateConstraintsMap();
     classString += generateFilePath("filePath");
     classString += generateConcatPath();
 
     classString += generateVisibility("public");
-    classString += generateStringLiterals(configs);
-    classString += generateConsturctor(configs, className);
+    classString += generateStringLiterals();
+    classString += generateConsturctor(className);
     classString += generateGetFromFile();
     classString += generateIsLeaf();
     classString += genetrateGetJSONValue();
@@ -31,22 +29,23 @@ std::string XMLClassGenerator::generateClass(std::string className) override
     return classString;
 }
 
-std::string JSONClassGenerator::generateGetJSONValue()
+std::string JSONClassGenerator::genetrateGetJSONValue()
 {
     return json_literals::GET_JSON_VALUE;
 }
 
-std::string JSONClassGenerator::generateGetFromFile() override
+std::string JSONClassGenerator::generateGetFromFile()
 {
     return json_literals::GET_FROM_FILE;
 }
 
-std::string JSONClassGenerator::generateSetInFile() override
+std::string JSONClassGenerator::generateSetInFile()
 {
     return json_literals::SET_IN_FILE;
 }
 
-std::string generateGETJSONObj(){
+std::string generateGETJSONObj()
+{
     return json_literals::GET_JSON_OBJ;
 }
 

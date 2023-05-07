@@ -164,7 +164,7 @@ std::string ClassGenerator::generateEnd(const std::string &className, const std:
     return literals::END.format({{"{CLASS_NAME}", className}, {"{EXTENSION}", extension}});
 }
 
-std::string ClassGenerator::toUpper(std::string str)
+static std::string ClassGenerator::toUpper(std::string str)
 {
     std::string upper = "";
     for (int x = 0; x < str.size(); x++)

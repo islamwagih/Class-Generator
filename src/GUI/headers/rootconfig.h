@@ -14,6 +14,8 @@ public:
     std::vector<Config> getConfigs() const;
     std::string getFileType() const;
     std::string getClassName() const;
+    RootConfig(const std::vector<Config> &configs, const std::string &fileType, const std::string &className);
+
 
     void setConfigs(const std::vector<Config> &configs);
     void setFileType(const std::string &fileType);
@@ -21,7 +23,6 @@ public:
 
 private:
     static RootConfig *instance;
-    RootConfig(const std::vector<Config> &configs, const std::string &fileType, const std::string &className);
     std::vector<Config> configs;
     std::string fileType;
     std::string className;
