@@ -6,12 +6,12 @@
 #include <unordered_set>
 #include "FormattableString.h"
 #include "literals.h"
-#include "config.h"
-#include "rootconfig.h"
+#include "../../GUI/headers/RootConfig.h"
+#include "../../GUI/headers/Config.h"
 
 class ClassGenerator
 {
-private:
+protected:
     std::string generateIncludes(const std::string &extension, const std::string &parserLib);
     std::string generateClassName();
     std::string generateVisibility(const std::string &visibility);
@@ -31,9 +31,9 @@ private:
     virtual std::string generateSetInFile() = 0;
     std::string generateApplyConstraints();
     std::string generateEnd(const std::string &extension);
-    std::string toUpper(std::string str);
-
+    static std::string toUpper(std::string str);
     RootConfig rootConfig;
+
 
 public:
     ClassGenerator(const RootConfig &root_config);

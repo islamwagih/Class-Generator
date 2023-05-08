@@ -1,7 +1,7 @@
 #ifndef XML_LITERALS_H
 #define XML_LITERALS_H
 
-#include "FormattableString.h"
+#include "../../ClassGenerator/headers/FormattableString.h"
 namespace xml_literals
 {
 
