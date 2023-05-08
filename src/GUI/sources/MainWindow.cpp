@@ -122,6 +122,11 @@ void MainWindow::on_resetBtn_clicked()
 
 void MainWindow::on_generateBtn_clicked()
 {
+    if (ui->classNameEdit->text().isEmpty())
+    {
+        QMessageBox::warning(this, "Warning", "Please enter a class name");
+        return;
+    }
     if (ui->outEdit->text().isEmpty())
     {
         QMessageBox::warning(this, "Warning", "Please choose an output directory");
