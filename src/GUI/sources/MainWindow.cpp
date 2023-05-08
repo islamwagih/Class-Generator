@@ -132,10 +132,13 @@ void MainWindow::on_generateBtn_clicked()
     {
     case TreeParser::VALIDATION_DUPLICATE_NAME:
         QMessageBox::warning(this, "Warning", "Please use unique parameter names");
+        break;
     case TreeParser::VALIDATION_EMPTY_FIELD:
         QMessageBox::warning(this, "Warning", "Please fill parameter names");
+        break;
     case TreeParser::VALIDATION_SUCCESS:
-        this->treeParser->parseTree();
+        Controller::getInstance()->generateClass(*this->treeParser->parseTree(), ui->outEdit->text().toStdString());
+        break;
     }
 }
 

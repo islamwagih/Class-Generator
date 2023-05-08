@@ -2,6 +2,10 @@
 
 RootConfig *RootConfig::instance = nullptr;
 
+RootConfig::RootConfig()
+{
+}
+
 RootConfig::RootConfig(const std::vector<Config> &configs, const std::string &fileType, const std::string &className)
     : configs(configs), fileType(fileType), className(className)
 {

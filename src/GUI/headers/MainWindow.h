@@ -5,6 +5,7 @@
 #include "headers\IntermediateFormatHandler.h"
 #include "headers\TreeParser.h"
 #include "headers\StateHandler.h"
+#include "..\..\controller\controller.h"
 #include <QMainWindow>
 #include <QPushButton>
 #include <QTreeWidgetItem>

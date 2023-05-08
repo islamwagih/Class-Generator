@@ -8,14 +8,14 @@ class JSONClassGenerator : public ClassGenerator
 {
 private:
     std::string genetrateGetJSONValue();
+
+protected:
     std::string generateGetFromFile() override;
     std::string generateSetInFile() override;
 
-
-
 public:
     JSONClassGenerator(const RootConfig &rootConfig);
-    std::string generateClass(std::string className) override;
+    std::string generateClass() override;
 };
 
 #endif // JSONCLASSGENERATOR_H

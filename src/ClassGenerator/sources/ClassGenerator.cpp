@@ -1,5 +1,4 @@
 #include "../headers/ClassGenerator.h"
-#include <iostream>
 
 ClassGenerator::ClassGenerator(const RootConfig &root_config)
 {
@@ -35,7 +34,6 @@ std::string ClassGenerator::generateConstraintsMap()
 std::vector<std::vector<std::string>> ClassGenerator::getAllLeafs(const std::vector<Config> &configs)
 {
     std::vector<std::vector<std::string>> leafs;
-    std::vector<Config> configs = this->rootConfig.getConfigs();
     for (auto config : configs)
     {
         if (config.getChildren().size() == 0)
@@ -101,7 +99,6 @@ std::string ClassGenerator::generateStringLiterals()
 std::unordered_set<std::string> ClassGenerator::getAllNames(const std::vector<Config> &configs)
 {
     std::unordered_set<std::string> names;
-    std::vector<Config> configs = this->rootConfig.getConfigs();
     for (auto config : configs)
     {
         if (config.getChildren().size() == 0)
@@ -162,7 +159,7 @@ std::string ClassGenerator::generateEnd(const std::string &extension)
     return literals::END.format({{"{CLASS_NAME}", this->rootConfig.getClassName()}, {"{EXTENSION}", extension}});
 }
 
-static std::string ClassGenerator::toUpper(std::string str)
+std::string ClassGenerator::toUpper(std::string str)
 {
     std::string upper = "";
     for (int x = 0; x < str.size(); x++)

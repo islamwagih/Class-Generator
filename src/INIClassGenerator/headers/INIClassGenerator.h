@@ -1,12 +1,12 @@
 #ifndef INICLASSGENERATOR_H
 #define INICLASSGENERATOR_H
 
-#include "ClassGenerator.h"
+#include "../../ClassGenerator/headers/ClassGenerator.h"
 #include "INI_literals.h"
 
 class INIClassGenerator : public ClassGenerator
 {
-private:
+protected:
     std::string generateGetFromFile() override;
     std::string generateSetInFile() override;
 

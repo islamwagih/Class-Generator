@@ -4,12 +4,12 @@ JSONClassGenerator::JSONClassGenerator(const RootConfig &rootConfig) : ClassGene
 {
 }
 
-std::string JSONClassGenerator::generateClass(std::string className)
+std::string JSONClassGenerator::generateClass()
 {
-    std::string name_upperCase = toUpper(className);
+    std::string className = this->rootConfig.getClassName();
     std::string classString = "";
-    classString += generateIncludes(name_upperCase, "CPP", "json.hpp");
-    classString += generateClassName(className);
+    classString += generateIncludes("CPP", "json.hpp");
+    classString += generateClassName();
 
     classString += generateVisibility("private");
     classString += generateConstraintsMap();
@@ -18,13 +18,13 @@ std::string JSONClassGenerator::generateClass(std::string className)
 
     classString += generateVisibility("public");
     classString += generateStringLiterals();
-    classString += generateConsturctor(className);
+    classString += generateConsturctor();
     classString += generateGetFromFile();
     classString += generateIsLeaf();
     classString += genetrateGetJSONValue();
     classString += generateSetInFile();
     classString += generateApplyConstraints();
-    classString += generateEnd(name_upperCase, "CPP");
+    classString += generateEnd("CPP");
 
     return classString;
 }
@@ -48,4 +48,3 @@ std::string generateGETJSONObj()
 {
     return json_literals::GET_JSON_OBJ;
 }
-

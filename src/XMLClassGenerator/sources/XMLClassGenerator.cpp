@@ -1,31 +1,30 @@
-#include "XMLClassGenerator.h"
-#include <iostream>
+#include "../headers/XMLClassGenerator.h"
 
-XMLClassGenerator::XMLClassGenerator(const std::vector<Config> &configs) : ClassGenerator(configs)
+XMLClassGenerator::XMLClassGenerator(const RootConfig &root_config) : ClassGenerator(root_config)
 {
 }
 
-std::string XMLClassGenerator::generateClass(std::string className) override
+std::string XMLClassGenerator::generateClass()
 {
-    std::string name_upperCase = ClassGenerator::toUpper(className);
+    std::string className = this->rootConfig.getClassName();
     std::string classString = "";
-    classString += generateIncludes(name_upperCase, "CPP", "xml.hpp");
-    classString += generateClassName(className);
+    classString += generateIncludes("CPP", "pugixml.hpp");
+    classString += generateClassName();
 
     classString += generateVisibility("private");
-    classString += generateConstraintsMap(configs);
+    classString += generateConstraintsMap();
     classString += generateFilePath("filePath");
     classString += generateGetXmlDoc();
     classString += generateConcatPath();
 
     classString += generateVisibility("public");
-    classString += generateStringLiterals(configs);
-    classString += generateConsturctor(configs, className);
+    classString += generateStringLiterals();
+    classString += generateConsturctor();
     classString += generateGetFromFile();
     classString += generateIsLeaf();
     classString += generateSetInFile();
     classString += generateApplyConstraints();
-    classString += generateEnd(name_upperCase, "CPP");
+    classString += generateEnd("CPP");
 
     return classString;
 }
@@ -35,38 +34,12 @@ std::string XMLClassGenerator::generateGetXmlDoc()
     return xml_literals::GET_XML_DOC;
 }
 
-std::string XMLClassGenerator::generateGetFromFile() override
+std::string XMLClassGenerator::generateGetFromFile()
 {
     return xml_literals::GET_FROM_FILE;
 }
 
-std::string XMLClassGenerator::generateSetInFile() override
+std::string XMLClassGenerator::generateSetInFile()
 {
     return xml_literals::SET_IN_FILE;
-}
-
-#include <fstream>
-int main()
-{
-    std::vector<Config> configs;
-    Config x("x", "int", {"-3", "3"}, {});
-    Config y("y", "bool", {""}, {});
-    Config width("width", "string", {"[a-z]+[0-9]+"}, {});
-    Config height("height", "int", {"0", "1000"}, {});
-    Config rect("rect", "nested", {""}, {x, y, width, height});
-    ClassGenerator cg({rect});
-    // open file temp.cpp
-    std::ofstream file("temp.cpp");
-    // write cg.generateClass() to file
-    if (file.is_open())
-    {
-        file << cg.generateClass();
-        file.close();
-    }
-    else
-    {
-        std::cerr << "Unable to open file";
-    }
-    // close file
-    // std::cout << cg.generateClass({}) << std::endl;
 }

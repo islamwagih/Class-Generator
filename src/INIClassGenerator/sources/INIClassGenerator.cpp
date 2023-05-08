@@ -1,4 +1,4 @@
-#include "INIClassGenerator.h"
+#include "../headers/INIClassGenerator.h"
 #include <iostream>
 
 INIClassGenerator::INIClassGenerator(const RootConfig &root_config) : ClassGenerator(root_config)
@@ -7,35 +7,35 @@ INIClassGenerator::INIClassGenerator(const RootConfig &root_config) : ClassGener
 
 std::string INIClassGenerator::generateClass()
 {
+    std::string className = this->rootConfig.getClassName();
     std::string name_upperCase = ClassGenerator::toUpper(className);
     std::string classString = "";
-    classString += generateIncludes(name_upperCase, "CPP", "ini.h");
-    classString += generateClassName(className);
+    classString += generateIncludes("CPP", "ini.h");
+    classString += generateClassName();
 
     classString += generateVisibility("private");
-    classString += generateConstraintsMap(configs);
+    classString += generateConstraintsMap();
     classString += generateFilePath("filePath");
-    classString += generateGetXmlDoc();
     classString += generateConcatPath();
 
     classString += generateVisibility("public");
-    classString += generateStringLiterals(configs);
-    classString += generateConsturctor(configs, className);
+    classString += generateStringLiterals();
+    classString += generateConsturctor();
     classString += generateGetFromFile();
     classString += generateIsLeaf();
     classString += generateSetInFile();
     classString += generateApplyConstraints();
-    classString += generateEnd(name_upperCase, "CPP");
+    classString += generateEnd("CPP");
 
     return classString;
 }
 
-std::string INIClassGenerator::generateGetFromFile() override
+std::string INIClassGenerator::generateGetFromFile()
 {
     return ini_literals::GET_FROM_FILE;
 }
 
-std::string INIClassGenerator::generateSetInFile() override
+std::string INIClassGenerator::generateSetInFile()
 {
     return ini_literals::SET_IN_FILE;
 }
