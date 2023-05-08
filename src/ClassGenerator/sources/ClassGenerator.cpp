@@ -6,14 +6,14 @@ ClassGenerator::ClassGenerator(const RootConfig &root_config)
     this->rootConfig = root_config;
 }
 
-std::string ClassGenerator::generateIncludes(const std::string &name, const std::string &extension, const std::string &parserLib)
+std::string ClassGenerator::generateIncludes(const std::string &extension, const std::string &parserLib)
 {
-    return literals::INCLUDES.format({{"{NAME}", name}, {"{EXTENSION}", extension}, {"{PARSER_LIB}", parserLib}});
+    return literals::INCLUDES.format({{"{NAME}", this->toUpper(this->rootConfig.getClassName())}, {"{EXTENSION}", extension}, {"{PARSER_LIB}", parserLib}});
 }
 
-std::string ClassGenerator::generateClassName(const std::string &className)
+std::string ClassGenerator::generateClassName()
 {
-    return literals::CLASS_NAME.format({{"{CLASS_NAME}", className}});
+    return literals::CLASS_NAME.format({{"{CLASS_NAME}", this->rootConfig.getClassName()}});
 }
 
 std::string ClassGenerator::generateVisibility(const std::string &visibility)
@@ -32,7 +32,7 @@ std::string ClassGenerator::generateConstraintsMap()
     return literals::CONSTRAINTS_MAP.format({{"{CONSTRAINTS}", constraints}});
 }
 
-std::vector<std::vector<std::string>> ClassGenerator::getAllLeafs()
+std::vector<std::vector<std::string>> ClassGenerator::getAllLeafs(const std::vector<Config> &configs)
 {
     std::vector<std::vector<std::string>> leafs;
     std::vector<Config> configs = this->rootConfig.getConfigs();
@@ -98,7 +98,7 @@ std::string ClassGenerator::generateStringLiterals()
     return literals::STRING_LITERALS.format({{"{STRING_LITERALS}", stringLiterals}});
 }
 
-std::unordered_set<std::string> ClassGenerator::getAllNames()
+std::unordered_set<std::string> ClassGenerator::getAllNames(const std::vector<Config> &configs)
 {
     std::unordered_set<std::string> names;
     std::vector<Config> configs = this->rootConfig.getConfigs();
@@ -120,14 +120,13 @@ std::unordered_set<std::string> ClassGenerator::getAllNames()
 
 std::string ClassGenerator::generateOneStringLiteral(std::string name)
 {
-    std::transform(name.begin(), name.end(), name.begin(), ::toupper);
-    return literals::ONE_STRING_LITERAL.format({{"{NAME}", name}});
+    return literals::ONE_STRING_LITERAL.format({{"{NAME}", toUpper(name)}});
 }
 
-std::string ClassGenerator::generateConsturctor(const std::string &className)
+std::string ClassGenerator::generateConsturctor()
 {
     std::vector<Config> configs = this->rootConfig.getConfigs();
-    return literals::CONSTRUCTOR.format({{"{CLASS_NAME}", className}, {"{INITIALIZE_LITERALS}", generateInitializeLiterals(configs)}});
+    return literals::CONSTRUCTOR.format({{"{CLASS_NAME}", this->rootConfig.getClassName()}, {"{INITIALIZE_LITERALS}", generateInitializeLiterals()}});
 }
 
 std::string ClassGenerator::generateInitializeLiterals()
@@ -144,8 +143,7 @@ std::string ClassGenerator::generateInitializeLiterals()
 
 std::string ClassGenerator::generateOneInitializeLiteral(std::string name)
 {
-    std::string upper = name;
-    std::transform(upper.begin(), upper.end(), upper.begin(), ::toupper);
+    std::string upper = toUpper(name);
     return literals::ONE_INITIALIZE_LITERAL.format({{"{NAME_UPPER}", upper}, {"{NAME}", name}});
 }
 
@@ -159,9 +157,9 @@ std::string ClassGenerator::generateApplyConstraints()
     return literals::APPLY_CONSTRAINTS;
 }
 
-std::string ClassGenerator::generateEnd(const std::string &className, const std::string &extension)
+std::string ClassGenerator::generateEnd(const std::string &extension)
 {
-    return literals::END.format({{"{CLASS_NAME}", className}, {"{EXTENSION}", extension}});
+    return literals::END.format({{"{CLASS_NAME}", this->rootConfig.getClassName()}, {"{EXTENSION}", extension}});
 }
 
 std::string ClassGenerator::toUpper(std::string str)
@@ -169,7 +167,6 @@ std::string ClassGenerator::toUpper(std::string str)
     std::string upper = "";
     for (int x = 0; x < str.size(); x++)
     {
-
         upper += toupper(str[x]);
     }
     return upper;

@@ -1,11 +1,11 @@
 #include "INIClassGenerator.h"
 #include <iostream>
 
-INIClassGenerator::INIClassGenerator(const std::vector<Config>& configs) : ClassGenerator(configs)
+INIClassGenerator::INIClassGenerator(const RootConfig &root_config) : ClassGenerator(root_config)
 {
 }
 
-std::string INIClassGenerator::generateClass(std::string className) override
+std::string INIClassGenerator::generateClass()
 {
     std::string name_upperCase = ClassGenerator::toUpper(className);
     std::string classString = "";
