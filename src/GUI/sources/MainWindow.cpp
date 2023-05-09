@@ -142,7 +142,8 @@ void MainWindow::on_generateBtn_clicked()
         QMessageBox::warning(this, "Warning", "Please fill parameter names");
         break;
     case TreeParser::VALIDATION_SUCCESS:
-        Controller::getInstance()->generateClass(*this->treeParser->parseTree(), ui->outEdit->text().toStdString());
+        Controller::getInstance()->generateClasses(*this->treeParser->parseTree(), ui->outEdit->text().toStdString());
+        QMessageBox::information(this, "Success", "Classes generated successfully");
         break;
     }
 }

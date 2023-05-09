@@ -6,7 +6,6 @@ JSONClassGenerator::JSONClassGenerator(const RootConfig &rootConfig) : ClassGene
 
 std::string JSONClassGenerator::generateClass()
 {
-    std::string className = this->rootConfig.getClassName();
     std::string classString = "";
     classString += generateIncludes("CPP", "json.hpp");
     classString += generateClassName();

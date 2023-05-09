@@ -7,12 +7,12 @@ ClassGenerator::ClassGenerator(const RootConfig &root_config)
 
 std::string ClassGenerator::generateIncludes(const std::string &extension, const std::string &parserLib)
 {
-    return literals::INCLUDES.format({{"{NAME}", this->toUpper(this->rootConfig.getClassName())}, {"{EXTENSION}", extension}, {"{PARSER_LIB}", parserLib}});
+    return literals::INCLUDES.format({{"{NAME}", this->toUpper("Parser")}, {"{EXTENSION}", extension}, {"{PARSER_LIB}", parserLib}});
 }
 
 std::string ClassGenerator::generateClassName()
 {
-    return literals::CLASS_NAME.format({{"{CLASS_NAME}", this->rootConfig.getClassName()}});
+    return literals::CLASS_NAME.format({{"{CLASS_NAME}", "Parser"}});
 }
 
 std::string ClassGenerator::generateVisibility(const std::string &visibility)
@@ -123,7 +123,7 @@ std::string ClassGenerator::generateOneStringLiteral(std::string name)
 std::string ClassGenerator::generateConsturctor()
 {
     std::vector<Config> configs = this->rootConfig.getConfigs();
-    return literals::CONSTRUCTOR.format({{"{CLASS_NAME}", this->rootConfig.getClassName()}, {"{INITIALIZE_LITERALS}", generateInitializeLiterals()}});
+    return literals::CONSTRUCTOR.format({{"{CLASS_NAME}", "Parser"}, {"{INITIALIZE_LITERALS}", generateInitializeLiterals()}});
 }
 
 std::string ClassGenerator::generateInitializeLiterals()
@@ -156,7 +156,7 @@ std::string ClassGenerator::generateApplyConstraints()
 
 std::string ClassGenerator::generateEnd(const std::string &extension)
 {
-    return literals::END.format({{"{CLASS_NAME}", this->rootConfig.getClassName()}, {"{EXTENSION}", extension}});
+    return literals::END.format({{"{CLASS_NAME}", "Parser"}, {"{EXTENSION}", extension}});
 }
 
 std::string ClassGenerator::toUpper(std::string str)

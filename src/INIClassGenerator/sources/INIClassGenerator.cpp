@@ -7,8 +7,6 @@ INIClassGenerator::INIClassGenerator(const RootConfig &root_config) : ClassGener
 
 std::string INIClassGenerator::generateClass()
 {
-    std::string className = this->rootConfig.getClassName();
-    std::string name_upperCase = ClassGenerator::toUpper(className);
     std::string classString = "";
     classString += generateIncludes("CPP", "ini.h");
     classString += generateClassName();

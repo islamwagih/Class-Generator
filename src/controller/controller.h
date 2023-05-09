@@ -5,6 +5,7 @@
 #include <fstream>
 #include "../GUI/headers/RootConfig.h"
 #include "../ClassGenerator/headers/ClassGenerator.h"
+#include "../UserClassGenerator/user_literals.h"
 #include "../JSONClassGenerator/headers/JSONClassGenerator.h"
 #include "../XMLClassGenerator/headers/XMLClassGenerator.h"
 #include "../INIClassGenerator/headers/INIClassGenerator.h"
@@ -13,7 +14,9 @@ class Controller
 {
 public:
     static Controller *getInstance();
-    void generateClass(const RootConfig &rootConfig, const std::string &outPath);
+    void generateClasses(const RootConfig &rootConfig, const std::string &outPath);
+    void generateUserClass(const RootConfig &rootConfig, const std::string &outPath);
+    void generateParserclass(const RootConfig &rootConfig, const std::string &outPath);
 
 private:
     static Controller *instance;

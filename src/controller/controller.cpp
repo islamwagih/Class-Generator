@@ -15,7 +15,20 @@ Controller *Controller::getInstance()
     return instance;
 }
 
-void Controller::generateClass(const RootConfig &rootConfig, const std::string &outPath)
+void Controller::generateClasses(const RootConfig &rootConfig, const std::string &outPath)
+{
+    generateUserClass(rootConfig, outPath);
+    generateParserclass(rootConfig, outPath);
+}
+
+void Controller::generateUserClass(const RootConfig &rootConfig, const std::string &outPath)
+{
+    std::ofstream out(outPath + "/" + rootConfig.getClassName() + ".cpp");
+    out << user_literals::USER_CLASS.format({{"{CLASS_NAME}", rootConfig.getClassName()}});
+    out.close();
+}
+
+void Controller::generateParserclass(const RootConfig &rootConfig, const std::string &outPath)
 {
     auto type = rootConfig.getFileType();
     ClassGenerator *generator;
@@ -32,7 +45,7 @@ void Controller::generateClass(const RootConfig &rootConfig, const std::string &
         generator = new INIClassGenerator(rootConfig);
     }
     std::string generatedClass = generator->generateClass();
-    std::ofstream out(outPath + "/" + rootConfig.getClassName() + ".cpp");
+    std::ofstream out(outPath + "/Parser.cpp");
     out << generatedClass;
     out.close();
 }

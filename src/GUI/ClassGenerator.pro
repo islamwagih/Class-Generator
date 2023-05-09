@@ -12,6 +12,7 @@ SOURCES += \
     ../ClassGenerator/sources/ClassGenerator.cpp \
     ../ClassGenerator/sources/FormattableString.cpp \
     ../ClassGenerator/sources/literals.cpp \
+    ../UserClassGenerator/user_literals.cpp \
     ../XMLClassGenerator/sources/XMLClassGenerator.cpp \
     ../XMLClassGenerator/sources/xml_literals.cpp \
     ../JSONClassGenerator/sources/JSONClassGenerator.cpp \
@@ -33,6 +34,7 @@ HEADERS += \
     ../ClassGenerator/headers/ClassGenerator.h \
     ../ClassGenerator/headers/FormattableString.h \
     ../ClassGenerator/headers/literals.h \
+    ../UserClassGenerator/user_literals.h \
     ../XMLClassGenerator/headers/XMLClassGenerator.h \
     ../XMLClassGenerator/headers/xml_literals.h \
     ../JSONClassGenerator/headers/JSONClassGenerator.h \

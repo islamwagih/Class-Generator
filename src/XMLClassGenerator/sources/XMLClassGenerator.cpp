@@ -6,7 +6,6 @@ XMLClassGenerator::XMLClassGenerator(const RootConfig &root_config) : ClassGener
 
 std::string XMLClassGenerator::generateClass()
 {
-    std::string className = this->rootConfig.getClassName();
     std::string classString = "";
     classString += generateIncludes("CPP", "pugixml.hpp");
     classString += generateClassName();
