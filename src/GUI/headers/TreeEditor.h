@@ -7,6 +7,7 @@
 #include <QLineEdit>
 #include <QComboBox>
 #include <QHBoxLayout>
+#include <stdexcept>
 #include <QHeaderView>
 
 class TreeEditor : public QObject
