@@ -65,7 +65,7 @@ std::vector<std::vector<std::string>> ClassGenerator::getAllLeafs(const std::vec
             std::vector<std::vector<std::string>> childrenLeafs = getAllLeafs(config.getChildren());
             for (auto &leaf : childrenLeafs)
             {
-                leaf.insert(leaf.begin(), config.getName() + "." + leaf[0]);
+                leaf[0] = config.getName() + "." + leaf[0];
             }
             leafs.insert(leafs.end(), childrenLeafs.begin(), childrenLeafs.end());
         }
