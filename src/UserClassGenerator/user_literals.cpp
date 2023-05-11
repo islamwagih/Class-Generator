@@ -2,38 +2,29 @@
 
 namespace user_literals
 {
-    FormattableString USER_CLASS = 
-R"(#ifndef {CLASS_NAME}_HPP
+    FormattableString USER_CLASS =
+        R"(#ifndef {CLASS_NAME}_HPP
 #define {CLASS_NAME}_HPP
 #include <vector>
 #include <string>
 #include <stdexcept>
-#include <parser.cpp>
+#include "parser.cpp"
 
 class {CLASS_NAME}
 {
 private:
     static {CLASS_NAME}* instance;
     Parser* parser;
-    {CLASS_NAME}(std::string filePath)
+    {CLASS_NAME}(const std::string &filePath)
     {
 
         parser = new Parser(filePath);
     }
 
 public:
-    // init class. Should be called before any other method
-    static void init(std::string filePath)
-    {
-        if (instance == nullptr)
-            instance = new {CLASS_NAME}(filePath);
-    }
-    static {CLASS_NAME} *getInstance()
-    {
-        if (instance == nullptr)
-            throw std::runtime_error("{CLASS_NAME} not initialized");
-        return instance;
-    }
+    void operator=({CLASS_NAME} const &) = delete; // delete copy constructor
+
+    static {CLASS_NAME} *getInstance(const std::string &filePath); // static function definition is outside the class
     template <typename T>
     T getVar(std::vector<std::string> path)
     {
@@ -50,13 +41,24 @@ public:
         {
             throw std::runtime_error("Path is not a leaf");
         }
-        if (parser->applyConstraints<T>(path, value)) return parser->setInFile<T>(path, value);
+        if (parser->applyConstraints<T>(path, value)){
+            return parser->setInFile<T>(path, value);
+        }
         return false;
     }
 };
 
+{CLASS_NAME} *{CLASS_NAME}::instance = nullptr;
 
+
+{CLASS_NAME} *{CLASS_NAME}::getInstance(const std::string &filePath) {
+    if (instance == nullptr)
+        instance = new {CLASS_NAME}(filePath);
+
+    return instance;
+}
 
 #endif
+
 )";
 }
