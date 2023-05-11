@@ -195,7 +195,7 @@ bool IntermediateFormatHandler::checkJsonChildren(json &j)
                 {
                     continue;
                 }
-                if (!constraint.value().is_number_float())
+                if (!constraint.value().is_number_float() && !constraint.value().is_number_integer())
                 {
                     return false;
                 }
@@ -239,6 +239,11 @@ bool IntermediateFormatHandler::checkJsonChildren(json &j)
         }
         // 5. Check if children are valid
         if (!checkJsonChildren(element.value()["children"]))
+        {
+            return false;
+        }
+        // 6. Check if name has spaces
+        if (nameString.find(' ') != std::string::npos)
         {
             return false;
         }

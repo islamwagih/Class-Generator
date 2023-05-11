@@ -85,7 +85,7 @@ void TreeEditor::setLineEditsValidator(QTreeWidgetItem *item)
 {
     // set validator property of line edit in first column to any strings
     auto nameEdit = static_cast<QLineEdit *>(this->tree->itemWidget(item, 0));
-    nameEdit->setProperty("validator", QVariant::fromValue<QValidator *>(new QRegExpValidator(QRegExp(".*"), this->tree)));
+    nameEdit->setProperty("validator", QVariant::fromValue<QValidator *>(new QRegExpValidator(QRegExp("[^\\s]*"), this->tree)));
     QObject::connect(nameEdit, &QLineEdit::textChanged, [this, nameEdit]()
                      { this->handleValidator(nameEdit, nameEdit->text()); });
 
