@@ -87,53 +87,53 @@ namespace literals
     bool applyConstraints(std::vector<std::string> path, T value)
     {
         std::string full_path = concatPath(path);
-    if (std::is_same < T, int> ::value) {
-        std::stringstream ss;
-        ss << value;
-        int temp_value;
-        ss >> temp_value;
-        std::string first_constraint = constraints[full_path][0];
-        std::string second_constraint = constraints[full_path][1];
-        bool valid = true;
-        if (!first_constraint.empty()) {
-            valid = temp_value >= std::stoi(first_constraint);
+        if (std::is_same < T, int> ::value) {
+            std::stringstream ss;
+            ss << value;
+            int temp_value;
+            ss >> temp_value;
+            std::string first_constraint = constraints[full_path][0];
+            std::string second_constraint = constraints[full_path][1];
+            bool valid = true;
+            if (!first_constraint.empty()) {
+                valid = temp_value >= std::stoi(first_constraint);
+            }
+            if (!second_constraint.empty() && valid) {
+                valid = temp_value <= std::stoi(second_constraint);
+            }
+            return valid;
         }
-        if (!second_constraint.empty() && valid) {
-            valid = temp_value <= std::stoi(second_constraint);
-        }
-        return valid;
-    }
-    else if(std::is_same < T, bool> ::value){
-        return true;
-    }
-    else if (std::is_same < T, std::string> ::value){
-        std::stringstream ss;
-        ss << value;
-        std::string temp_value = ss.str();
-        std::string regex = constraints[full_path][0];
-        if(regex.empty()){
+        else if(std::is_same < T, bool> ::value){
             return true;
         }
-        return std::regex_match(temp_value, std::regex(regex));
-    }
-    else{
+        else if (std::is_same < T, std::string> ::value){
+            std::stringstream ss;
+            ss << value;
+            std::string temp_value = ss.str();
+            std::string regex = constraints[full_path][0];
+            if(regex.empty()){
+                return true;
+            }
+            return std::regex_match(temp_value, std::regex(regex));
+        }
+        else{
 
-        std::stringstream ss;
-        ss << value;
-        double temp_value;
-        ss >> temp_value;
-        std::string first_constraint = constraints[full_path][0];
-        std::string second_constraint = constraints[full_path][1];
-        bool valid = true;
-        if (!first_constraint.empty()) {
-            valid = temp_value >= std::stod(first_constraint);
+            std::stringstream ss;
+            ss << value;
+            double temp_value;
+            ss >> temp_value;
+            std::string first_constraint = constraints[full_path][0];
+            std::string second_constraint = constraints[full_path][1];
+            bool valid = true;
+            if (!first_constraint.empty()) {
+                valid = temp_value >= std::stod(first_constraint);
+            }
+            if (!second_constraint.empty() && valid) {
+                valid = temp_value <= std::stod(second_constraint);
+            }
+            return valid;
         }
-        if (!second_constraint.empty() && valid) {
-            valid = temp_value <= std::stod(second_constraint);
-        }
-        return valid;
-    }
-    return true;
+
     })";
 
     FormattableString END = R"(

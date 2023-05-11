@@ -28,7 +28,15 @@ namespace xml_literals
                 throw std::runtime_error("XML Tag not found");
             }
         }
-        std::stringstream ss(node.child_value());
+
+        auto node_data = static_cast<std::string>(node.child_value());
+        if (node_data == "true"){
+            node_data = "1";
+        }
+        else if (node_data == "false"){
+            node_data = "0";
+        }
+        std::stringstream ss(node_data);
         T value;
         ss >> value;
         return value;
