@@ -56,7 +56,11 @@ namespace xml_literals
                 throw std::runtime_error("XML Tag not found");
             }
         }
-        node.text().set(value);
+
+        std::stringstream ss;
+        ss << value;
+        node.text().set(ss.str().c_str());
+
         return doc.save_file(filePath.c_str());
     })";
 
