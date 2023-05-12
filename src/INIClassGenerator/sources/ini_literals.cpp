@@ -14,8 +14,8 @@ T getFromFile(const std::vector<std::string>& path) {
     return ini[section_name][key_name];
 })";
 
-    FormattableString SET_IN_FILE = R"(bool setInFile(std::vector<std::string>& path, T value)
-{
+    FormattableString SET_IN_FILE = R"(template<typename T>
+bool setInFile(std::vector<std::string>& path, T value){
     mINI::INIFile file(filePath);
     mINI::INIStructure ini;
     file.read(ini);
