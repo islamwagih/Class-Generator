@@ -8,7 +8,7 @@ namespace xml_literals
         R"(    pugi::xml_document getXMLDoc(){
         pugi::xml_document doc;
         if(!doc.load_file(filePath.c_str())){
-            throw std::runtime_error("XML File not found");
+            throw std::runtime_error("XML File not found, make sure the file path is correct");
         }
         return doc;
     }
@@ -25,7 +25,7 @@ namespace xml_literals
         {
             node = node.child(tag.c_str());
             if(!node){
-                throw std::runtime_error("XML Tag not found");
+                throw std::runtime_error("XML Tag not found, make sure the path is correct");
             }
         }
 
@@ -53,7 +53,7 @@ namespace xml_literals
         {
             node = node.child(tag.c_str());
             if(!node){
-                throw std::runtime_error("XML Tag not found");
+                throw std::runtime_error("XML Tag not found, make sure the path is correct");
             }
         }
 
