@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<root>
+	<circle>
+		<radius>33</radius>
+	</circle>
+	<name>Elawam</name>
+	<salary>8888.5</salary>
+	<militaryState>1</militaryState>
+</root>

@@ -1,0 +1,45 @@
+{
+    "class_name": "GeneratedClass",
+    "type": "XML",
+    "parameters": [
+        {
+            "name": "circle",
+            "type": "nested",
+            "constraints": [],
+            "children": [
+                {
+                    "name": "radius",
+                    "type": "int",
+                    "constraints": [
+                        1,
+                        50
+                    ],
+                    "children": []
+                }
+            ]
+        },
+        {
+            "name": "name",
+            "type": "string",
+            "constraints": [
+                "[A-Z a-z]+"
+            ],
+            "children": []
+        },
+        {
+            "name": "salary",
+            "type": "float",
+            "constraints": [
+                8000,
+                9777.5
+            ],
+            "children": []
+        },
+        {
+            "name": "militaryState",
+            "type": "bool",
+            "constraints": [],
+            "children": []
+        }
+    ]
+}

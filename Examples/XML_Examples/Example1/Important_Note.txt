@@ -1,0 +1,17 @@
+To compile this exmaple right way, pugixml.cpp, pugixml.hpp and pugiconfig.hpp should exist.
+
+add only main.cpp and pugixml.cpp to executable in CMakeLists.txt
+
+
+exmaple of CMakeLists:
+
+
+cmake_minimum_required(VERSION 3.24)
+project(untitled5)
+
+set(CMAKE_CXX_STANDARD 17)
+
+add_executable(untitled5 main.cpp pugixml.cpp)
+
+
+I hope this helps if you are facing a problem.
