@@ -109,7 +109,7 @@ void MainWindow::on_removeRowBtn_clicked()
 void MainWindow::reset()
 {
     treeEditor->reset();
-    ui->outEdit->clear();
+    //    ui->outEdit->clear();
     ui->classNameEdit->clear();
     ui->typeComboBox->setCurrentIndex(0);
     this->stateHandler->saveState();
@@ -225,8 +225,10 @@ void MainWindow::on_actionReset_triggered()
 void MainWindow::on_outBrowseBtn_clicked()
 {
     QString dir = QFileDialog::getExistingDirectory(this, "Select Output Directory", "", QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
+    if (dir.isEmpty())
+        return;
     ui->outEdit->setText(dir);
-    this->stateHandler->saveState();
+    // this->stateHandler->saveState();
 }
 
 void MainWindow::on_actionUndo_triggered()
